@@ -14,12 +14,6 @@ html, body {
     background-color: var(--bg-light);
 }
 
-    body * {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-    }
-
 h1:focus {
     outline: none;
 }
@@ -71,6 +65,12 @@ h1:focus {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.loading-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
 
 .loading-progress {
     position: relative;
