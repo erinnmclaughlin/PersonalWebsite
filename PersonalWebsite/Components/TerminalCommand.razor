@@ -1,0 +1,42 @@
+﻿<div>
+    <span>> @TypedCommand</span>
+    @if (ShowCursor)
+    {
+        <TerminalCursor />
+    }
+</div>
+
+@code {
+
+    [Parameter] public required string Command { get; set; }
+    [Parameter] public EventCallback OnAnimationComplete { get; set; }
+
+    private string TypedCommand { get; set; } = "";
+    private bool ShowCursor { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Animate();
+    }
+
+    public async Task Animate()
+    {
+        TypedCommand = "";
+        var length = 0;
+
+        while (length <= Command.Length)
+        {
+            TypedCommand = Command.Substring(0, length);
+            length++;
+            StateHasChanged();
+            await Task.Delay(50);
+        }
+
+        ShowCursor = true;
+        StateHasChanged();
+
+        await Task.Delay(200);
+        ShowCursor = false;
+        await OnAnimationComplete.InvokeAsync();
+    }
+}
