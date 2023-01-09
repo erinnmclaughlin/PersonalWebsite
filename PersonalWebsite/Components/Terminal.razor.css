@@ -39,13 +39,13 @@
         font-family: Menlo, Monaco, "Consolas", "Courier New", "Courier";
         font-size: 11pt;
         background: #30353A;
-        padding: 10px;
         box-sizing: border-box;
         position: absolute;
         width: 100%;
         top: 30px;
         bottom: 0;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
         border-radius: 0 0 8px 8px;
     }
 
@@ -54,6 +54,7 @@
             flex-direction: column;
             gap: 5px;
             height: 100%;
+            padding: 10px;
         }
 
 .terminal-data {

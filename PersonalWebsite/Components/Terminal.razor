@@ -5,23 +5,26 @@
         <div class="button red"></div>
     </header>
     <section class="terminal">
-        <div class="history">
-            @if (IsRunningProgram)
-            {
-                <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-                    <GlitchText Value="coming soon" />
-                </div>
-            }
-            else
-            {
+        @if (!IsRunningProgram)
+        {
+            <div class="history">
                 <TerminalCommands Commands="Commands" OnComplete="OnCommandsCompleted" />
 
-                if (IsBuilding)
+                @if (IsBuilding)
                 {
                     <div>Building...</div>
                 }
-            }
-        </div>
+            </div>
+        }
+        else
+        {
+            <div style="transform-style: preserve-3d; perspective: 500px; height: 100%; position: relative;">
+                <VaporwaveBackground />
+                <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                    <GlitchText Value="coming soon" />
+                </div>
+            </div>
+        }
     </section>
 </div>
 
