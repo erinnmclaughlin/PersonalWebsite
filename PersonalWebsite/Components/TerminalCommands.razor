@@ -1,0 +1,41 @@
+﻿@for (int i = 0; i <= ExecutedCommandCount - 1; i++)
+{
+    <TerminalCommand Command="@Commands[i]" OnAnimationComplete="AnimateNextCommand" />
+}
+
+@if (!IsAnimating && ExecutedCommandCount != Commands.Length)
+{
+    <div>> <TerminalCursor /></div>
+}
+
+@code {
+
+    private bool IsAnimating { get; set; } = false;
+    private int ExecutedCommandCount { get; set; } = 0;
+
+    [Parameter] public required string[] Commands { get; set; }
+    [Parameter] public EventCallback OnComplete { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        await AnimateNextCommand();
+    }
+
+    private async Task AnimateNextCommand()
+    {
+        IsAnimating = false;
+        StateHasChanged();
+
+        await Task.Delay(600);
+
+        if (ExecutedCommandCount == Commands.Length)
+        {
+            await OnComplete.InvokeAsync();
+            return;
+        }
+
+        IsAnimating = true;
+        ExecutedCommandCount++;
+    }
+}
