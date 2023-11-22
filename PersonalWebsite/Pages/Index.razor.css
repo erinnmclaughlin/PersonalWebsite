@@ -15,17 +15,21 @@ header {
     font-family: monospace;
 }
 
+    header .links {
+        z-index: 10; /* in front of lottie */
+    }
+
+    header .title {
+        display: block;
+        text-decoration: none;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.33rem;
+    }
+
     header a {
         color: white;
     }
-
-        header a.title {
-            display: block;
-            text-decoration: none;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.33rem;
-        }
 
 .cat-container {
     width: 550px;
