@@ -1,9 +1,7 @@
 ﻿.terminal-window {
     height: calc(100vh - 14rem);
-    margin: auto;
     position: relative;
     margin: 0rem 1rem;
-    margin-top: 185px;
 }
 
     .terminal-window header {

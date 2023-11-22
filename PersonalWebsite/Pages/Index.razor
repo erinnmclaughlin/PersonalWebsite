@@ -2,29 +2,30 @@
 
 <PageTitle>Coming Soon!</PageTitle>
 
-<div style="display: flex; position: relative; min-width: 290px; z-index: 10;">
+<main>
+    <header>
 
-    <div style="position: fixed; left: 1rem; top: 1.5rem; font-family: monospace; z-index: 10;">
-        <a href="" style="color: white; cursor: pointer; text-decoration: none; font-size: 1.75rem; font-weight: 700;">erinnmclaughlin.com</a>
         <div>
-            <a href="https://github.com/erinnmclaughlin" style="color: white;">github</a>
-            <span style="color: white;"> &middot; </span>
-            <a href="https://www.linkedin.com/in/e1mclaughlin/" style="color: white;">linked in</a>
+            <a href="" class="title">erinnmclaughlin.com</a>
+            <div>
+                <a href="https://github.com/erinnmclaughlin">github</a>
+                <span> &middot; </span>
+                <a href="https://www.linkedin.com/in/e1mclaughlin/">linked in</a>
+            </div>
         </div>
-    </div>
 
-    <div style="max-width: 550px; width: max-content; position: absolute; right: 200px; top: -130px;">
-        <div style="position: absolute; top: 250px; right: 70px; height: 100px; width: 100px; color: white; opacity: 0.6;">
-            <ZZZ />
+        <div class="cat-container">
+            <div class="snoring-container">
+                <ZZZ />
+            </div>
+            <lottie-player src="lottie/cat_sleeping.json" background="transparent" speed="1" loop autoplay></lottie-player>
         </div>
-        <lottie-player src="lottie/cat_sleeping.json" background="transparent" speed="1" loop autoplay></lottie-player>
-    </div>
 
-    <div style="max-width: 550px; width: max-content; position: absolute; right: 0; top: -130px; transform: rotateY(180deg);">
-        <lottie-player src="lottie/woman_working.json" background="transparent" speed="1" loop autoplay></lottie-player>
-    </div>
+        <div class="woman-container">
+            <lottie-player src="lottie/woman_working.json" background="transparent" speed="1" loop autoplay></lottie-player>
+        </div>
 
-    
-</div>
+    </header>
 
-<Terminal />
+    <Terminal />
+</main>

@@ -9,9 +9,17 @@
     box-sizing: border-box;
 }
 
+html, body, #app {
+    height: 100%;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: var(--bg-light);
+}
+
+a {
+    cursor: pointer;
 }
 
 h1:focus {
@@ -28,13 +36,6 @@ h1:focus {
 
 .validation-message {
     color: red;
-}
-
-#app {
-    height: 100vh;
-    display: block;
-    position: relative;
-    overflow: hidden;
 }
 
 #blazor-error-ui {
