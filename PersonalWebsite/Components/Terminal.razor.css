@@ -1,7 +1,7 @@
 ﻿.terminal-window {
     height: calc(100vh - 14rem);
     position: relative;
-    margin: 0rem 1rem;
+    margin: 0rem 0.5rem;
 }
 
     .terminal-window header {
@@ -66,3 +66,4 @@
 .terminal-window .green {
     color: green;
 }
+
