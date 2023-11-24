@@ -2,9 +2,12 @@
     background: unset;
     color: unset;
     font-family: unset;
+    font-size: unset;
     cursor: pointer;
     margin-right: auto;
     border: 0;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
 }
 
 #start:hover {
