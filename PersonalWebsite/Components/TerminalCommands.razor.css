@@ -4,12 +4,28 @@
     font-family: unset;
     font-size: unset;
     cursor: pointer;
-    margin-right: auto;
     border: 0;
-    padding-right: 1rem;
-    padding-bottom: 1rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
 }
 
-#start:hover {
-    color: lime;
+    #start:hover {
+        color: lime;
+    }
+
+#desktop-instructions {
+    display: none;
+}
+
+
+@media only screen and (min-width: 600px) {
+
+    #desktop-instructions {
+        display: unset;
+    }
+
+    #mobile-instructions {
+        display: none;
+    }
 }

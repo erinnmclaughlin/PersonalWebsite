@@ -1,6 +1,21 @@
 ﻿@if (CurrentState is State.Waiting)
 {
-    <button id="start" type="button" @onclick="Start">> <TerminalCursor /></button>
+    <button id="start" type="button" aria-label="start" @onclick="Start">
+        
+        @if (ShowInstructions)
+        {
+            <div id="mobile-instructions">
+                <TerminalCommand Command="Tap to start" />
+            </div>
+            <div id="desktop-instructions">
+                <TerminalCommand Command="Click to start" />
+            </div>
+        }
+        else
+        {
+            <span>> <TerminalCursor /></span>            
+        }
+    </button>
 }
 else
 {
@@ -24,10 +39,16 @@ else
 
 @code {
 
+    private readonly System.Timers.Timer _timer = new()
+    {
+        Interval = 5_000
+    };
+
     private State CurrentState { get; set; } = State.Waiting;
 
     private bool IsTyping { get; set; }
     private bool ShowCursor => HasNext() && !IsTyping;
+    private bool ShowInstructions { get; set; }
 
     private int ExecutedCommandCount { get; set; } = 0;
 
@@ -36,6 +57,22 @@ else
 
     [Parameter] 
     public EventCallback OnComplete { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _timer.Elapsed += TriggerInstructions;
+        _timer.Start();
+    }
+
+    private void TriggerInstructions(object? o, EventArgs e)
+    {
+        _timer.Stop();
+        _timer.Elapsed -= TriggerInstructions;
+        _timer.Dispose();
+
+        ShowInstructions = true;
+        StateHasChanged();
+    }
 
     private async Task OnCommandCompleted()
     {
