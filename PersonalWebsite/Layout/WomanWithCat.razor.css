@@ -16,7 +16,7 @@
         height: 100px;
         width: 100px;
         right: 50px;
-        bottom: 50px;
+        bottom: 33px;
         opacity: 0.6;
     }
 
@@ -30,5 +30,108 @@
 
     .cat-container {
         margin-right: 200px;
+    }
+}
+
+/* zzz animations from CodePen: https://codepen.io/gorenburg/pen/MWwmLYM */
+
+.z {
+    position: absolute;
+    bottom: 50%;
+    right: 10%;
+    animation-name: zzz;
+    animation-duration: 4s;
+    animation-delay: 0;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.zz {
+    opacity: 0;
+    position: absolute;
+    bottom: 50%;
+    right: 10%;
+    animation-name: zzz-2;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes zzz {
+    0% {
+        bottom: 50%;
+        right: 10%;
+        opacity: 0;
+    }
+
+    20% {
+        bottom: 65%;
+        right: 13%;
+    }
+
+    40% {
+        bottom: 80%;
+        right: 10%;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    60% {
+        bottom: 95%;
+        right: 13%;
+    }
+
+    80% {
+        bottom: 110%;
+        right: 10%;
+    }
+
+    100% {
+        bottom: 125%;
+        right: 13%;
+        opacity: 0;
+        font-size: 20px;
+    }
+}
+
+@keyframes zzz-2 {
+    0% {
+        bottom: 50%;
+        right: 0;
+        opacity: 0;
+    }
+
+    20% {
+        bottom: 65%;
+        right: 3%;
+    }
+
+    40% {
+        bottom: 80%;
+        right: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    60% {
+        bottom: 95%;
+        right: 3%;
+    }
+
+    80% {
+        bottom: 110%;
+        right: 0;
+    }
+
+    100% {
+        bottom: 125%;
+        right: 3%;
+        opacity: 0;
+        font-size: 20px;
     }
 }
