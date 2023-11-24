@@ -1,16 +1,34 @@
-﻿@for (int i = 0; i <= ExecutedCommandCount - 1; i++)
-{
-    <TerminalCommand Command="@Commands[i]" OnAnimationComplete="AnimateNextCommand" />
-}
-
-@if (!IsAnimating && ExecutedCommandCount != Commands.Length)
+﻿@if (CurrentState is State.Waiting)
 {
     <button id="start" type="button" @onclick="Start">> <TerminalCursor /></button>
+}
+else
+{
+    for (int i = 0; i <= ExecutedCommandCount - 1; i++)
+    {
+        <TerminalCommand Command="@Commands[i]" OnAnimationComplete="OnCommandCompleted" />
+    }
+
+    @if (ShowCursor)
+    {
+        <div>> <TerminalCursor /></div>
+    }
+
+    @if (IsTyping)
+    {
+        <audio autoplay loop>
+            <source src="sfx/keyboard-typing.mp3" type="audio/mpeg" />
+        </audio>
+    }
 }
 
 @code {
 
-    private bool IsAnimating { get; set; } = false;
+    private State CurrentState { get; set; } = State.Waiting;
+
+    private bool IsTyping { get; set; }
+    private bool ShowCursor => HasNext() && !IsTyping;
+
     private int ExecutedCommandCount { get; set; } = 0;
 
     [Parameter] 
@@ -19,26 +37,38 @@
     [Parameter] 
     public EventCallback OnComplete { get; set; }
 
-    private void Start()
+    private async Task OnCommandCompleted()
     {
-        IsAnimating = true;
-        ExecutedCommandCount++;
-    }
-
-    private async Task AnimateNextCommand()
-    {
-        IsAnimating = false;
+        IsTyping = false;
         StateHasChanged();
 
         await Task.Delay(600);
 
-        if (ExecutedCommandCount == Commands.Length)
+        if (!HasNext())
         {
             await OnComplete.InvokeAsync();
             return;
         }
 
-        IsAnimating = true;
+        EnterNextCommand();
+    }
+
+    private bool HasNext()
+    {
+        return ExecutedCommandCount < Commands.Length;
+    }
+
+    private void EnterNextCommand()
+    {
+        IsTyping = true;
         ExecutedCommandCount++;
     }
+
+    private void Start()
+    {
+        CurrentState = State.Running;
+        EnterNextCommand();
+    }
+
+    private enum State { Waiting, Running, Completed }
 }
