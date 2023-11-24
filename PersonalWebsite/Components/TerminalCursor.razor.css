@@ -1,8 +1,8 @@
 ﻿.terminal-cursor {
     opacity: 1;
-    -webkit-animation: blink 0.7s infinite;
-    -moz-animation: blink 0.7s infinite;
-    animation: blink 0.7s infinite;
+    -webkit-animation: blink 0.8s infinite;
+    -moz-animation: blink 0.8s infinite;
+    animation: blink 0.8s infinite;
 }
 
 @keyframes blink {
