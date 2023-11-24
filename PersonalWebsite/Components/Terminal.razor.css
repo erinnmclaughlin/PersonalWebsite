@@ -1,7 +1,11 @@
 ﻿.terminal-window {
-    height: calc(100vh - 14rem);
-    position: relative;
+    position: absolute;
+    top: 11.59rem;
+    left: 1rem;
+    right: 1rem;
+    bottom: 2rem;
     margin: 0rem 0.5rem;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
     .terminal-window header {
