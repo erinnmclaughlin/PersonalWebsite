@@ -5,6 +5,7 @@
     margin-top: calc(-0.375 * 302.5px);
     position: absolute;
     right: 0;
+    pointer-events: none;
 }
 
 .cat-container {
