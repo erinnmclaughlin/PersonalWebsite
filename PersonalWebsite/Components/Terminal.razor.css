@@ -1,10 +1,9 @@
 ﻿.terminal-window {
     position: absolute;
-    top: 11.59rem;
-    left: 1rem;
-    right: 1rem;
-    bottom: 2rem;
-    margin: 0rem 0.5rem;
+    top: 140px;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
@@ -51,14 +50,6 @@
         border-radius: 0 0 8px 8px;
     }
 
-        .terminal-window section.terminal .history {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            height: 100%;
-            padding: 10px;
-        }
-
 .terminal-data {
     display: none;
 }
@@ -71,3 +62,11 @@
     color: green;
 }
 
+@media only screen and (min-width: 600px) {
+    .terminal-window {
+        top: 183px;
+        left: 1rem;
+        right: 1rem;
+        bottom: 2rem;
+    }
+}

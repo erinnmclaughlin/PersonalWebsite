@@ -1,6 +1,6 @@
 :root {
-    --bg-light: #f1f5f9;
-    --primary: #6C63FF;
+    --woman-width: 550px;
+
 }
 
 * {
@@ -15,7 +15,7 @@ html, body, #app {
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: var(--bg-light);
+    background-color: var(#f1f5f9);
 }
 
 a {
@@ -24,6 +24,10 @@ a {
 
 h1:focus {
     outline: none;
+}
+
+.flipY {
+    transform: rotateY(180deg);
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -90,7 +94,7 @@ h1:focus {
     }
 
         .loading-progress circle:last-child {
-            stroke: var(--primary);
+            stroke: #6C63FF;
             stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
             transition: stroke-dasharray 0.05s ease-in-out;
         }
