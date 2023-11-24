@@ -1,0 +1,12 @@
+﻿#start {
+    background: unset;
+    color: unset;
+    font-family: unset;
+    cursor: pointer;
+    margin-right: auto;
+    border: 0;
+}
+
+#start:hover {
+    color: lime;
+}

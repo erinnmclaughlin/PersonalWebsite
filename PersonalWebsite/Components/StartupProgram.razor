@@ -1,9 +1,9 @@
-﻿@if (!IsRunningProgram)
+﻿@if (CurrentState is not State.Running)
 {
     <div class="history">
         <TerminalCommands Commands="Commands" OnComplete="OnCommandsCompleted" />
 
-        @if (IsBuilding)
+        @if (CurrentState is State.Building)
         {
             <p>Building...</p>
         }
@@ -29,15 +29,15 @@ else
         "dotnet run"
     };
 
-    private bool IsBuilding { get; set; } = false;
-    private bool IsRunningProgram { get; set; } = false;
+    private State CurrentState { get; set; } = State.EnteringCommands;
 
     private async Task OnCommandsCompleted()
     {
-        IsBuilding = true;
+        CurrentState = State.Building;
         await Task.Delay(2000);
 
-        IsBuilding = false;
-        IsRunningProgram = true;
+        CurrentState = State.Running;
     }
+
+    enum State { EnteringCommands, Building, Running }
 }
