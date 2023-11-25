@@ -3,21 +3,20 @@
     position: relative;
     min-width: 290px;
     z-index: 10;
-    height: 185px;
-    padding: 1.5rem 1rem;
+    padding: 1rem;
     color: white;
     font-family: monospace;
 }
-
-    header .links {
-        z-index: 10; /* in front of lottie */
-    }
 
     header .title {
         display: block;
         text-decoration: none;
         font-size: 1.75rem;
         font-weight: 700;
+    }
+
+    header .title,
+    header .links {
         margin-bottom: 0.33rem;
     }
 
@@ -25,5 +24,8 @@
         color: white;
     }
 
-
-
+.page {
+    width: 100%;
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.9);
+}

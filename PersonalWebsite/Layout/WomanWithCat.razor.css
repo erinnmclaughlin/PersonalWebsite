@@ -1,38 +1,28 @@
 ﻿.cat-container,
 .woman-container {
-    width: 400px;
-    height: 302.5px;
-    margin-top: calc(-0.375 * 302.5px);
+    width: 285px;
     position: absolute;
     right: 0;
     pointer-events: none;
 }
 
+.woman-container {
+    margin-top: -88px;
+}
+
 .cat-container {
-    margin-right: 145px;
+    margin-right: 100px;
+    margin-top: -90px;
 }
 
     .cat-container .snoring-container {
         position: absolute;
         height: 100px;
         width: 100px;
-        right: 50px;
-        bottom: 33px;
+        right: 25px;
+        bottom: 0;
         opacity: 0.6;
     }
-
-@media only screen and (min-width: 600px) {
-    .cat-container,
-    .woman-container {
-        width: 550px;
-        height: 416px;
-        margin-top: calc(-0.375 * 416px);
-    }
-
-    .cat-container {
-        margin-right: 200px;
-    }
-}
 
 /* zzz animations from CodePen: https://codepen.io/gorenburg/pen/MWwmLYM */
 
