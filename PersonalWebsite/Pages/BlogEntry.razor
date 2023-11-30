@@ -1,10 +1,41 @@
 ﻿@page "/blog"
 
-@if (_content.HasValue)
-{
-    <Card>
-        <div class="markdown">
-            @_content.Value
-        </div>
-    </Card>
+<Card>
+    @if (_content is null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <Markdown Value="@_content" />
+    }
+</Card>
+
+@code {
+
+    private string? _content;
+
+    [Inject]
+    private HttpClient HttpClient { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    [CascadingParameter]
+    public required Dictionary<string, BlogEntryMeta> BlogEntries { get; set; }
+
+    [Parameter, SupplyParameterFromQuery]
+    public required string Slug { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _content = await HttpClient.GetStringAsync(BlogEntries[Slug].Path);
+        }
+        catch
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
 }
