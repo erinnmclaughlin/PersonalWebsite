@@ -1,4 +1,4 @@
-﻿@page "/blog/{Path}"
+﻿@page "/blog"
 
 @if (_content.HasValue)
 {
@@ -9,19 +9,4 @@
     </Card>
 }
 
-@code {
 
-    private MarkupString? _content;
-
-    [Inject]
-    private HttpClient HttpClient { get; set; } = default!;
-
-    [Parameter]
-    public required string Path { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var content = await HttpClient.GetStringAsync($"blog/{Path}.md");
-        _content = (MarkupString)Markdig.Markdown.ToHtml(content);
-    }
-}

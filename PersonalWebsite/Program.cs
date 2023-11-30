@@ -6,7 +6,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.Configure<Dictionary<string, BlogEntryMeta>>(builder.Configuration.GetRequiredSection("Blogs"));
+builder.Services.Configure<List<BlogEntryMeta>>(builder.Configuration.GetRequiredSection("Blogs"));
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 

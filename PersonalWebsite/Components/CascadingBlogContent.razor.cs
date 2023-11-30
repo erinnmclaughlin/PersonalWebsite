@@ -8,7 +8,7 @@ public sealed partial class CascadingBlogContent : IDisposable
     private IDisposable? _changeListener;
 
     [Inject]
-    private IOptionsMonitor<Dictionary<string, BlogEntryMeta>> BlogsMonitor { get; set; } = default!;
+    private IOptionsMonitor<List<BlogEntryMeta>> BlogsMonitor { get; set; } = default!;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -20,6 +20,6 @@ public sealed partial class CascadingBlogContent : IDisposable
 
     protected override void OnInitialized()
     {
-        _changeListener = BlogsMonitor.OnChange(context =>StateHasChanged());
+        _changeListener = BlogsMonitor.OnChange(_ => StateHasChanged());
     }
 }
