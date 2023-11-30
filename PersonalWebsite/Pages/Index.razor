@@ -1,26 +1,20 @@
 ﻿@page "/"
 
 <div class="page-content">
+
     <Card style="width: 100%"></Card>
 
     <Card style="flex-grow: 1; min-width: min(500px, 100%);">
 
-        @if (_blogs is null)
+        @foreach (var blog in BlogEntries.Take(5))
         {
-            <p>Loading...</p>
-        }
-        else
-        {
-            foreach (var blog in _blogs.Take(5))
-            {
-                <div style="display: flex; gap: 1rem;">
-                    <div class="square"></div>
-                    <div>
-                        <h3><a href="blog/@blog.Value">@blog.Value</a></h3>
-                        <p>Posted on @blog.Key</p>
-                    </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="square"></div>
+                <div>
+                    <h3><a href="blog/@blog.Key">@blog.Value.Title</a></h3>
+                    <p>Posted on @blog.Value.PublishedOn</p>
                 </div>
-            }
+            </div>
         }
     </Card>
 

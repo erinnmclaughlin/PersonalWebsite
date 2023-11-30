@@ -1,15 +1,10 @@
-﻿@page "/blog/{Title}"
-@using Markdig
+﻿@page "/blog/{Path}"
 
-@if (_content is null)
-{
-    <p>Loading...</p>
-}
-else
+@if (_content.HasValue)
 {
     <Card>
         <div class="markdown">
-            @_content
+            @_content.Value
         </div>
     </Card>
 }
@@ -19,13 +14,14 @@ else
     private MarkupString? _content;
 
     [Inject]
-    private BlogsClient BlogsClient { get; set; } = default!;
+    private HttpClient HttpClient { get; set; } = default!;
 
     [Parameter]
-    public required string Title { get; set; }
+    public required string Path { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        _content = await BlogsClient.GetBlogContent(Title);
+        var content = await HttpClient.GetStringAsync($"blog/{Path}.md");
+        _content = (MarkupString)Markdig.Markdown.ToHtml(content);
     }
 }
