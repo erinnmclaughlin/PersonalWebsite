@@ -1,7 +1,25 @@
-﻿.page-content {
+﻿.blog-list {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-content {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.blog-title {
+    color: black;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.blog-meta {
+    color: #333;
+    font-size: 12px;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .square {

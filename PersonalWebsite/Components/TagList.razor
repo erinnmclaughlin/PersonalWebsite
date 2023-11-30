@@ -1,0 +1,11 @@
+﻿<div class="tag-list">
+    @foreach (var value in Values)
+    {
+        <Tag Value="@value" />
+    }
+</div>
+
+@code {
+    [Parameter,EditorRequired]
+    public required IEnumerable<string> Values { get; set; }
+}

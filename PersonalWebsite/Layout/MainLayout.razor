@@ -1,8 +1,6 @@
 ﻿@inherits LayoutComponentBase
-@inject NavigationManager NavigationManager
-@implements IDisposable
 
-<StarryBackground IsAnimated="IsHomePage" />
+<StarryBackground IsAnimated="NavigationManager.IsHomePage()" />
 
 <main>
     <PageHeader />

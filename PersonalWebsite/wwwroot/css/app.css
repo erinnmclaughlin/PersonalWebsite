@@ -4,25 +4,36 @@
     box-sizing: border-box;
 }
 
-html, body, #app {
-    height: 100%;
+html {
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
 }
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-html {
-    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-}
-
 #app {
     position: relative;
 }
 
+html, body, #app {
+    height: 100%;
+}
+
 a {
-    cursor: pointer;
     text-decoration: none;
+}
+
+a, button {
+    cursor: pointer;
+}
+
+p {
+    line-height: 1.4;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
 }
 
 h1:focus {
@@ -33,6 +44,40 @@ h1:focus {
     transform: rotateY(180deg);
 }
 
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.mt-auto {
+    margin-top: auto;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+.mb-auto {
+    margin-bottom: auto;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.my-auto {
+   margin-top: auto;
+   margin-bottom: auto;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.m-auto {
+    margin: auto;
+}
 
 #blazor-error-ui {
     background: lightyellow;

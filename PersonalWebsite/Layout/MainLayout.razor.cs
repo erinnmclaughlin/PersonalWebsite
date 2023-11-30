@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Components.Routing;
 
 namespace PersonalWebsite.Layout;
 
-public sealed partial class MainLayout
+public sealed partial class MainLayout : IDisposable
 {
-    private bool IsHomePage => NavigationManager.Uri == NavigationManager.BaseUri;
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
 
     public void Dispose()
     {
