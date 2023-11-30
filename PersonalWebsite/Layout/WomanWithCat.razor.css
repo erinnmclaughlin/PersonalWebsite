@@ -1,22 +1,22 @@
 ﻿.cat-container,
 .woman-container {
-    width: 400px;
-    height: 302.5px;
-    margin-top: calc(-0.375 * 302.5px);
+    width: 333px;
+    height: 290px;
+    margin-top: -90px;
     position: absolute;
     right: 0;
     pointer-events: none;
 }
 
 .cat-container {
-    margin-right: 145px;
+    margin-right: 130px;
 }
 
     .cat-container .snoring-container {
         position: absolute;
         height: 100px;
         width: 100px;
-        right: 50px;
+        right: 40px;
         bottom: 33px;
         opacity: 0.6;
     }
