@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 namespace PersonalWebsite.Pages;
 public partial class BlogEntry
 {
-
     private MarkupString? _content;
 
     [Inject]

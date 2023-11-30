@@ -21,3 +21,8 @@
         </Card>
     }
 </div>
+
+@code {
+    [CascadingParameter]
+    public required Dictionary<string, BlogEntryMeta> BlogEntries { get; set; }
+}

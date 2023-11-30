@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@implements IDisposable
+@inherits LayoutComponentBase
 
 <StarryBackground IsAnimated="NavigationManager.IsHomePage()" />
 
@@ -8,3 +9,23 @@
         @Body
     </div>
 </main>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= HandleLocationChanged;
+    }
+
+    protected override void OnInitialized()
+    {
+        NavigationManager.LocationChanged += HandleLocationChanged;
+    }
+
+    private void HandleLocationChanged(object? o, LocationChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+}
