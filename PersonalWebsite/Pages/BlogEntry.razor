@@ -1,0 +1,31 @@
+﻿@page "/blog/{Title}"
+@using Markdig
+
+@if (_content is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <Card>
+        <div class="markdown">
+            @_content
+        </div>
+    </Card>
+}
+
+@code {
+
+    private MarkupString? _content;
+
+    [Inject]
+    private BlogsClient BlogsClient { get; set; } = default!;
+
+    [Parameter]
+    public required string Title { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _content = await BlogsClient.GetBlogContent(Title);
+    }
+}

@@ -1,40 +1,28 @@
 ﻿@page "/"
 
-<header>
+<div class="page-content">
+    <Card style="width: 100%"></Card>
 
-    <div class="links">
-        <h1 class="title">erin mclaughlin</h1>
-        <div>
-            <a href="https://github.com/erinnmclaughlin" target="_blank">github</a>
-            <span> &middot; </span>
-            <a href="https://www.linkedin.com/in/e1mclaughlin/" target="_blank">linked in</a>
-        </div>
-    </div>
+    <Card style="flex-grow: 1; min-width: min(500px, 100%);">
 
-    <WomanWithCat />
+        @if (_blogs is null)
+        {
+            <p>Loading...</p>
+        }
+        else
+        {
+            foreach (var blog in _blogs.Take(5))
+            {
+                <div style="display: flex; gap: 1rem;">
+                    <div class="square"></div>
+                    <div>
+                        <h3><a href="blog/@blog.Value">@blog.Value</a></h3>
+                        <p>Posted on @blog.Key</p>
+                    </div>
+                </div>
+            }
+        }
+    </Card>
 
-</header>
-
-<div class="page">
-
-    <div class="card" style="width: 100%;">
-    </div>
-
-    <div class="card" style="flex-grow: 1; min-width: min(500px, 100%);">
-        <div style="display: flex; gap: 1rem;">
-            <div class="square"></div>
-            <div>
-                <h3>A Blog Title</h3>
-                <p>A blog description!</p>
-            </div>
-        </div>
-        <div style="display: flex; gap: 1rem;">
-            <div class="square"></div>
-            <div>
-                <h3>A Blog Title</h3>
-                <p>A blog description!</p>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="flex-grow: 0; width: min(400px, 100%);"></div>
+    <Card style="flex-grow: 0; width: min(400px, 100%);"></Card>
 </div>

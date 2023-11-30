@@ -1,7 +1,12 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@implements IDisposable
 
-<StarryBackground />
+<StarryBackground IsAnimated="IsHomePage" />
 
 <main>
-    @Body
+    <PageHeader />
+    <div class="page">
+        @Body
+    </div>
 </main>

@@ -1,0 +1,31 @@
+﻿header {
+    display: flex;
+    position: relative;
+    min-width: 290px;
+    z-index: 10;
+    height: 120px;
+    color: white;
+    font-family: monospace;
+}
+
+    header a {
+        color: white;
+    }
+
+    header .page-title-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 1rem;
+    }
+
+    header .page-title {
+        display: block;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.33rem;
+    }
+
+        header .page-title a {
+            text-decoration: none;
+        }

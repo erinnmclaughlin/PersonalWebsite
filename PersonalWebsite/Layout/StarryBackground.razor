@@ -1,9 +1,15 @@
 ﻿@using System.Text
 
 <div class="background-container">
-    <div class="stars-container">
+    <div class="stars-container @(IsAnimated ? "animate" : "")">
         <div id="stars"></div>
         <div id="stars2"></div>
         <div id="stars3"></div>
     </div>
 </div>
+
+@code {
+
+    [Parameter]
+    public bool IsAnimated { get; set; }
+}
