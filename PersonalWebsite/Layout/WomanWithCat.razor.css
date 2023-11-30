@@ -21,19 +21,6 @@
         opacity: 0.6;
     }
 
-@media only screen and (min-width: 600px) {
-    .cat-container,
-    .woman-container {
-        width: 550px;
-        height: 416px;
-        margin-top: calc(-0.375 * 416px);
-    }
-
-    .cat-container {
-        margin-right: 200px;
-    }
-}
-
 /* zzz animations from CodePen: https://codepen.io/gorenburg/pen/MWwmLYM */
 
 .z {
