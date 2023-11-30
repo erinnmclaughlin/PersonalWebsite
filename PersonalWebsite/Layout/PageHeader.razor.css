@@ -26,6 +26,6 @@
         margin-bottom: 0.33rem;
     }
 
-        header .page-title a {
-            text-decoration: none;
-        }
+    header .links a {
+        text-decoration: underline;
+    }

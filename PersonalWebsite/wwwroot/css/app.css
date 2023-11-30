@@ -22,6 +22,7 @@ html {
 
 a {
     cursor: pointer;
+    text-decoration: none;
 }
 
 h1:focus {
@@ -32,11 +33,6 @@ h1:focus {
     transform: rotateY(180deg);
 }
 
-.page {
-    flex-grow: 1;
-    padding: 0 1rem 2.5rem 1rem;
-    width: 100%;
-}
 
 #blazor-error-ui {
     background: lightyellow;
