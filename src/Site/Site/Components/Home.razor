@@ -21,12 +21,12 @@
 </header>
 
 <Terminal>
-    @if (Kernel is null)
+    @if (ShowAibbaChat)
     {
-        <Site.Client.Components.ComingSoon.StartupProgram />
+        <TerminalChat />
     }
     else
     {
-        <TerminalChat Kernel="Kernel" />
+        <Site.Client.Components.ComingSoon.StartupProgram />
     }
 </Terminal>

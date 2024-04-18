@@ -8,6 +8,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.Configure<AIOptions>(builder.Configuration.GetSection("AI"));
+builder.Services.AddScoped<Aibba>();
+builder.Services.AddScoped<AibbaPlugin>();
 
 var app = builder.Build();
 

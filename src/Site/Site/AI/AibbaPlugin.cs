@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Site.AI;
 
-public class WebsitePlugin(NavigationManager navigationManager)
+public sealed class AibbaPlugin(NavigationManager navigationManager)
 {
     [KernelFunction, Description("Get a link to Erin's GitHub profile.")]
     public static string GetGitHubUrl() => "https://github.com/erinnmclaughlin";
