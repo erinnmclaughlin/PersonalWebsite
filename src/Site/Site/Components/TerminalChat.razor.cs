@@ -24,56 +24,93 @@ public sealed partial class TerminalChat
 
     private ChatHistory ChatHistory { get; } = [];
     private List<ChatMessage> Messages { get; } = [];
-    private ChatState State { get; set; } = ChatState.Loading;
+    private ChatState State { get; set; } = ChatState.StreamingMessage;
 
     protected override void OnInitialized()
     {
-        ChatHistory.AddSystemMessage("You are an AI assistant on Erin McLaughlin's personal website & portfolio. Erin is the software engineer that programmed you. Talk to users about her.");
-        ChatHistory.AddAssistantMessage("Oh hey, you found Erin's website! What would you like to know?");
-        Messages.Add(new ChatMessage("AI")
-        {
-            Content = ChatHistory.Last().Content
-        });
+        ChatHistory.AddSystemMessage("""
+            You are an AI assistant named Aibba and you are running on Erin McLaughlin's personal website. 
+            Erin is the software engineer that programmed you. Talk to users about her.
+            """);
 
-        State = ChatState.WaitingForUser;
+        InvokeAsync(RenderGreeting);
+    }
+
+    private async Task RenderGreeting()
+    {
+        foreach (var message in WelcomeMessages)
+        {
+            await RenderGreeting(message);
+            await Task.Delay(300);
+        }
+
+        await RenderAssistantMessage("Sure thing! Feel free to ask me if there's anything else you'd like to know about Erin!");
+    }
+
+    private async Task RenderGreeting(string message)
+    {
+        var chatMessage = new ChatMessage("Erin") { Content = string.Empty };
+        Messages.Add(chatMessage);
+
+        foreach (var part in message)
+        {
+            chatMessage.Content += part;
+            await Task.Delay(30);
+            StateHasChanged();
+        }
+
+        ChatHistory.AddSystemMessage(message);
     }
 
     private async Task RenderUserMessage(string message)
     {
         ChatHistory.AddUserMessage(message);
         Messages.Add(new ("User") { Content = message });
-        State = ChatState.WaitingForAssistant;
-        StateHasChanged();
 
         await RenderAssistantMessage();
     }
 
-    private async Task RenderAssistantMessage()
+    private async Task RenderAssistantMessage(string? message = null)
     {
-        var chatService = Kernel.GetRequiredService<IChatCompletionService>();
-        var message = chatService.GetStreamingChatMessageContentsAsync(ChatHistory, _promptExecutionSettings, Kernel, _ctSource.Token);
+        State = ChatState.WaitingForAssistant;
+        StateHasChanged();
 
-        var chatMessage = new ChatMessage("AI") { Content = string.Empty };
+        if (message is null)
+        {
+            var chatService = Kernel.GetRequiredService<IChatCompletionService>();
+            var chatMessageContent = await chatService.GetChatMessageContentAsync(ChatHistory, _promptExecutionSettings, Kernel, _ctSource.Token);
+            message = chatMessageContent.Content ?? string.Empty;
+        }
+
+        var chatMessage = new ChatMessage("Aibba") { Content = string.Empty };
         Messages.Add(chatMessage);
 
-        State = ChatState.StreamingAssistantMessage;
+        State = ChatState.StreamingMessage;
 
-        await foreach (var part in message)
+        foreach (var part in message)
         {
             chatMessage.Content += part;
-            await Task.Delay(50);
+            await Task.Delay(30);
             StateHasChanged();
         }
 
         ChatHistory.AddAssistantMessage(chatMessage.Content);
         State = ChatState.WaitingForUser;
+        StateHasChanged();
     }
 
     private enum ChatState
     {
         Loading,
         WaitingForAssistant,
-        StreamingAssistantMessage,
+        StreamingMessage,
         WaitingForUser
     }
+
+    private readonly List<string> WelcomeMessages = [
+        "Hi! Welcome to my website. I'm a software engineer with a passion for building context-driven systems.",
+        "You can check out my work on [GitHub](https://github.com/erinnmclaughlin), or ask my AI friend Aibba about me!",
+        "Aibba is a large language model I've integrated into my website to answer questions you might have about me.",
+        "Alright - I gotta go! Aibba, can you take it from here?"
+        ];
 }

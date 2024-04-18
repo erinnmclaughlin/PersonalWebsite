@@ -2,10 +2,13 @@
 @attribute [StreamRendering]
 
 <div class="terminal-chat">
+
     @foreach (var message in Messages)
     {
         <div>
-            <label>@message.Author</label>
+            <label style="@(message.Author == "Erin" ? "color: cyan" : "")">
+                @message.Author
+            </label>
             <ChatContent Content="@message.Content" />
         </div>
     }
