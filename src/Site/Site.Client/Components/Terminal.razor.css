@@ -1,0 +1,81 @@
+﻿.terminal-window {
+    position: absolute;
+    top: 140px;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+    .terminal-window header {
+        background: #E0E8F0;
+        height: 30px;
+        border-radius: 8px 8px 0 0;
+        padding-right: 10px;
+        text-align: right;
+    }
+
+        .terminal-window header .button {
+            width: 12px;
+            height: 12px;
+            margin: 10px 4px 0 0;
+            display: inline-block;
+            border-radius: 8px;
+        }
+
+            .terminal-window header .button.green {
+                background: #3BB662;
+            }
+
+            .terminal-window header .button.yellow {
+                background: #E5C30F;
+            }
+
+            .terminal-window header .button.red {
+                background: #E75448;
+            }
+
+    .terminal-window section.terminal {
+        background: #30353A;
+        box-sizing: border-box;
+        position: absolute;
+        width: 100%;
+        top: 30px;
+        bottom: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-radius: 0 0 8px 8px;
+        padding: 0;
+    }
+
+        .terminal-window section.terminal,
+        .terminal-window section.terminal ::deep input {
+            color: white;
+            font-size: 11pt;
+            font-family: Menlo, Monaco, "Consolas", "Courier New", "Courier";
+        }
+
+            .terminal-window section.terminal ::deep label {
+                font-weight: 700;
+            }
+
+.terminal-data {
+    display: none;
+}
+
+.terminal-window .gray {
+    color: gray;
+}
+
+.terminal-window .green {
+    color: green;
+}
+
+@media only screen and (min-width: 600px) {
+    .terminal-window {
+        top: 183px;
+        left: 1rem;
+        right: 1rem;
+        bottom: 2rem;
+    }
+}

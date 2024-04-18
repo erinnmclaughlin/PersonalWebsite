@@ -1,0 +1,32 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<StarryBackground />
+
+<header>
+
+    <div class="links">
+        <h1 class="title">erin mclaughlin</h1>
+        <div>
+            <a href="https://github.com/erinnmclaughlin" target="_blank">github</a>
+            <span> &middot; </span>
+            <a href="https://www.linkedin.com/in/e1mclaughlin/" target="_blank">linked in</a>
+            <span> &middot; </span>
+            <a href="https://erinnmclaughlin.github.io/Resume/" target="_blank">resume</a>
+        </div>
+    </div>
+
+    <VeryRealisticAnimationOfMyselfAndJax />
+
+</header>
+
+<Terminal>
+    @if (Kernel is null)
+    {
+        <Site.Client.Components.ComingSoon.StartupProgram />
+    }
+    else
+    {
+        <TerminalChat Kernel="Kernel" />
+    }
+</Terminal>
