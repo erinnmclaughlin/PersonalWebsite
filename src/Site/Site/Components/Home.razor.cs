@@ -8,6 +8,9 @@ namespace Site.Components;
 
 public sealed partial class Home : IDisposable
 {
+    [Parameter, SupplyParameterFromQuery]
+    public bool Preview { get; set; }
+
     [Inject, NotNull]
     private IOptionsMonitor<AIOptions>? AIOptionsMonitor { get; set; }
 
@@ -32,7 +35,7 @@ public sealed partial class Home : IDisposable
     {
         Kernel = null;
 
-        if (options.Enabled)
+        if (Preview || options.Enabled)
         {
             var kernelBuilder = Kernel.CreateBuilder()
                 .AddOpenAIChatCompletion(options.TextCompletionModel, options.ApiKey)
