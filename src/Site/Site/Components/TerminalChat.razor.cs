@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using Site.AI;
 
 namespace Site.Components;
 
@@ -17,8 +16,8 @@ public sealed partial class TerminalChat
     private readonly CancellationTokenSource _ctSource = new();
     private readonly OpenAIPromptExecutionSettings _promptExecutionSettings = new() { ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions };
 
-    [Inject]
-    private Kernel Kernel { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public required Kernel Kernel { get; set; }
 
     [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
@@ -29,8 +28,6 @@ public sealed partial class TerminalChat
 
     protected override void OnInitialized()
     {
-        Kernel.Plugins.AddFromObject(new WebsitePlugin(NavigationManager));
-
         ChatHistory.AddSystemMessage("You are an AI assistant on Erin McLaughlin's personal website & portfolio. Erin is the software engineer that programmed you. Talk to users about her.");
         ChatHistory.AddAssistantMessage("Oh hey, you found Erin's website! What would you like to know?");
         Messages.Add(new ChatMessage("AI")

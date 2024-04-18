@@ -1,4 +1,3 @@
-using Microsoft.SemanticKernel;
 using Site.AI;
 using Site.Components;
 
@@ -8,12 +7,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-if (builder.Configuration.GetSection("AI").Get<AIOptions>() is { } aiOptions)
-{
-    builder.Services.AddKernel()
-        .AddOpenAIChatCompletion(aiOptions.TextCompletionModel, aiOptions.ApiKey)
-        .AddOpenAITextEmbeddingGeneration(aiOptions.TextEmbeddingModel, aiOptions.ApiKey);
-}
+builder.Services.Configure<AIOptions>(builder.Configuration.GetSection("AI"));
 
 var app = builder.Build();
 

@@ -48,7 +48,7 @@
         display: flex;
         flex-direction: column;
         gap: 0.5em;
-        padding: 0.5em;
+        padding: 0;
     }
 
         .terminal-window section.terminal,

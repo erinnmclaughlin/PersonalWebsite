@@ -1,4 +1,5 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
 <StarryBackground />
 
@@ -20,5 +21,12 @@
 </header>
 
 <Terminal>
-    <TerminalChat />
+    @if (Kernel is null)
+    {
+        <Site.Client.Components.ComingSoon.StartupProgram />
+    }
+    else
+    {
+        <TerminalChat Kernel="Kernel" />
+    }
 </Terminal>
