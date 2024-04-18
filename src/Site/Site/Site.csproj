@@ -11,6 +11,7 @@
     <ProjectReference Include="..\Site.Client\Site.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.4" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.7.1" />
+    <PackageReference Include="Vereyon.Web.HtmlSanitizer" Version="1.8.0" />
   </ItemGroup>
 
 </Project>

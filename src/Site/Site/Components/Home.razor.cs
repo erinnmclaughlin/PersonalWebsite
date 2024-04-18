@@ -4,7 +4,7 @@ using Microsoft.SemanticKernel;
 using Site.AI;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Site.Components.Pages;
+namespace Site.Components;
 
 public sealed partial class Home : IDisposable
 {

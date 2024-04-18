@@ -8,14 +8,14 @@ namespace Site.Components;
 public class ChatMessage(string author)
 {
     public string Author { get; } = author;
-    public string Message { get; set; } = string.Empty;
+    public string? Content { get; set; }
 }
 
 public sealed partial class TerminalChat
 {
     private readonly CancellationTokenSource _ctSource = new();
     private readonly OpenAIPromptExecutionSettings _promptExecutionSettings = new() { ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions };
-
+    
     [Parameter, EditorRequired]
     public required Kernel Kernel { get; set; }
 
@@ -32,9 +32,8 @@ public sealed partial class TerminalChat
         ChatHistory.AddAssistantMessage("Oh hey, you found Erin's website! What would you like to know?");
         Messages.Add(new ChatMessage("AI")
         {
-            Message = ChatHistory.Last().Content ?? ""
+            Content = ChatHistory.Last().Content
         });
-        StateHasChanged();
 
         State = ChatState.WaitingForUser;
     }
@@ -42,7 +41,7 @@ public sealed partial class TerminalChat
     private async Task RenderUserMessage(string message)
     {
         ChatHistory.AddUserMessage(message);
-        Messages.Add(new ("User") { Message = message });
+        Messages.Add(new ("User") { Content = message });
         State = ChatState.WaitingForAssistant;
         StateHasChanged();
 
@@ -51,24 +50,23 @@ public sealed partial class TerminalChat
 
     private async Task RenderAssistantMessage()
     {
+        var chatService = Kernel.GetRequiredService<IChatCompletionService>();
+        var message = chatService.GetStreamingChatMessageContentsAsync(ChatHistory, _promptExecutionSettings, Kernel, _ctSource.Token);
+
+        var chatMessage = new ChatMessage("AI") { Content = string.Empty };
+        Messages.Add(chatMessage);
+
         State = ChatState.StreamingAssistantMessage;
 
-        var message = new ChatMessage("AI");
-        Messages.Add(message);
-        var chatService = Kernel.GetRequiredService<IChatCompletionService>();
-        var response = chatService.GetStreamingChatMessageContentsAsync(ChatHistory, _promptExecutionSettings, Kernel, _ctSource.Token);
-
-        await foreach(var part in response)
+        await foreach (var part in message)
         {
-            message.Message += part.Content ?? "";
+            chatMessage.Content += part;
             await Task.Delay(50);
             StateHasChanged();
         }
 
-        ChatHistory.AddAssistantMessage(message.Message);
-
+        ChatHistory.AddAssistantMessage(chatMessage.Content);
         State = ChatState.WaitingForUser;
-        StateHasChanged();
     }
 
     private enum ChatState

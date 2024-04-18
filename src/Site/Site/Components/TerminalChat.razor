@@ -1,23 +1,25 @@
 ﻿@rendermode InteractiveServer
 @attribute [StreamRendering]
 
-@foreach (var message in Messages)
-{
-    <div style="margin-bottom: 0.5em">
-        <label>@message.Author</label>
-        <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Message))</p>
-    </div>
-}
+<div class="terminal-chat">
+    @foreach (var message in Messages)
+    {
+        <div>
+            <label>@message.Author</label>
+            <ChatContent Content="@message.Content" />
+        </div>
+    }
 
-@if (State is ChatState.Loading)
-{
-    <p>Loading...</p>
-}
-else if (State is ChatState.WaitingForAssistant)
-{
-    <p>Thinking...</p>
-}
-else if (State is ChatState.WaitingForUser)
-{
-    <TerminalInput OnUserInputReceived="RenderUserMessage" />
-}
+    @if (State is ChatState.Loading)
+    {
+        <p>Loading...</p>
+    }
+    else if (State is ChatState.WaitingForAssistant)
+    {
+        <p>Thinking...</p>
+    }
+    else if (State is ChatState.WaitingForUser)
+    {
+        <TerminalInput OnUserInputReceived="RenderUserMessage" />
+    }
+</div>
