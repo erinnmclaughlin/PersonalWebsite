@@ -1,6 +1,8 @@
 ﻿div,
 div ::deep form {
     cursor: text;
+    display: flex;
+    flex-direction: column;
     height: 100%;
 }
 

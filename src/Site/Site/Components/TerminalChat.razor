@@ -1,11 +1,11 @@
 ﻿@rendermode InteractiveServer
 @attribute [StreamRendering]
 
-@foreach (var (authorName, message) in Messages)
+@foreach (var message in Messages)
 {
     <div style="margin-bottom: 0.5em">
-        <label>@authorName</label>
-        <p>@message</p>
+        <label>@message.Author</label>
+        <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Message))</p>
     </div>
 }
 
