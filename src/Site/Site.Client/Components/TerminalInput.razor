@@ -1,0 +1,38 @@
+﻿@rendermode InteractiveAuto
+
+<div>
+    <EditForm Model="this" OnValidSubmit="SubmitAsync" @onclick="FocusInputFieldAsync">
+        <AntiforgeryToken />
+        <DataAnnotationsValidator />
+        <InputText autocomplete="off" @ref="_inputField" @bind-Value="Message" @onclick:stopPropagation="true" />
+    </EditForm>
+</div>
+
+@code {
+
+    private InputText? _inputField;
+
+    [Required]
+    private string Message { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<string> OnUserInputReceived { get; set; }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+            await FocusInputFieldAsync();
+    }
+
+    private async Task FocusInputFieldAsync()
+    {
+        if (_inputField?.Element is not null)
+            await _inputField.Element.Value.FocusAsync();
+    }
+
+    private async Task SubmitAsync()
+    {
+        await OnUserInputReceived.InvokeAsync(Message);
+    }
+
+}

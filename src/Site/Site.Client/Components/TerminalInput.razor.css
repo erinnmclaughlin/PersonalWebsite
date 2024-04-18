@@ -1,0 +1,14 @@
+﻿div,
+div ::deep form {
+    cursor: text;
+    height: 100%;
+}
+
+    div ::deep input {
+        outline: transparent;
+        border: 0;
+        background-color: transparent;
+        width: 100%;
+        resize: none;
+        padding: 0;
+    }

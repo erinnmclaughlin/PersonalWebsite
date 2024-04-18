@@ -1,0 +1,26 @@
+﻿header {
+    display: flex;
+    position: relative;
+    min-width: 290px;
+    z-index: 10;
+    height: 185px;
+    padding: 1.5rem 1rem;
+    color: white;
+    font-family: monospace;
+}
+
+    header .links {
+        z-index: 10; /* in front of lottie */
+    }
+
+    header .title {
+        display: block;
+        text-decoration: none;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.33rem;
+    }
+
+    header a {
+        color: white;
+    }
