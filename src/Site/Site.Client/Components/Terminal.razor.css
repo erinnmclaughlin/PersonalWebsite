@@ -58,6 +58,10 @@
             font-family: Menlo, Monaco, "Consolas", "Courier New", "Courier";
         }
 
+            .terminal-window section.terminal ::deep label {
+                font-weight: 700;
+            }
+
 .terminal-data {
     display: none;
 }

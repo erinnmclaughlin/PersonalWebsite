@@ -1,6 +1,7 @@
 ﻿@rendermode InteractiveAuto
 
 <div>
+    <label>User</label>
     <EditForm Model="this" OnValidSubmit="SubmitAsync" @onclick="FocusInputFieldAsync">
         <AntiforgeryToken />
         <DataAnnotationsValidator />
@@ -18,7 +19,7 @@
     [Parameter]
     public EventCallback<string> OnUserInputReceived { get; set; }
 
-    protected override async void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
             await FocusInputFieldAsync();

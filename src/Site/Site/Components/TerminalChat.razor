@@ -1,9 +1,12 @@
 ﻿@rendermode InteractiveServer
 @attribute [StreamRendering]
 
-@foreach (var message in Messages)
+@foreach (var (authorName, message) in Messages)
 {
-    <p>@message</p>
+    <div style="margin-bottom: 0.5em">
+        <label>@authorName</label>
+        <p>@message</p>
+    </div>
 }
 
 @if (State is ChatState.Loading)
@@ -17,42 +20,4 @@ else if (State is ChatState.WaitingForAssistant)
 else if (State is ChatState.WaitingForUser)
 {
     <TerminalInput OnUserInputReceived="RenderUserMessage" />
-}
-
-@code {
-
-    private int Count { get; set; } = 0;
-    private List<string> Messages { get; } = [];
-    private ChatState State { get; set; } = ChatState.Loading;
-
-    protected override void OnInitialized()
-    {
-        State = ChatState.WaitingForAssistant;
-        InvokeAsync(() => RenderAssistantMessage(0));
-    }
-
-    private async Task RenderUserMessage(string message)
-    {
-        Messages.Add(message);
-        State = ChatState.WaitingForAssistant;
-        StateHasChanged();
-
-        await RenderAssistantMessage();
-    }
-
-    private async Task RenderAssistantMessage(int delay = 3000)
-    {
-        await Task.Delay(delay); // simulated delay
-
-        Messages.Add($"Message {Count++}");
-        State = ChatState.WaitingForUser;
-    }
-
-    enum ChatState
-    {
-        Loading,
-        WaitingForAssistant,
-        StreamingAssistantMessage,
-        WaitingForUser
-    }
 }
