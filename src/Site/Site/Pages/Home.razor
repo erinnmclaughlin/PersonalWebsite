@@ -18,17 +18,5 @@
 </header>
 
 <Terminal>
-    @if (Preview)
-    {
-        <TerminalChat />
-    }
-    else
-    {
-        <Site.Client.Components.ComingSoon.StartupProgram />
-    }
+    <TerminalChat />
 </Terminal>
-
-@code {
-    [Parameter, SupplyParameterFromQuery]
-    public bool Preview { get; set; }
-}
