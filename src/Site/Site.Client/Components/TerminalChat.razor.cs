@@ -79,6 +79,13 @@ public sealed partial class TerminalChat : IAsyncDisposable
         }
     }
 
+    private static string GetLabelColor(string authorName) => authorName switch
+    {
+        "Erin" => "cyan",
+        "Aibba" => "magenta",
+        _ => "default"
+    };
+
     enum ChatState
     {
         Rendering,

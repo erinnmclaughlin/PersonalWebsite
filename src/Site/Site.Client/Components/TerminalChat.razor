@@ -7,7 +7,7 @@
     @foreach (var message in Messages)
     {
         <div>
-            <label style="@(message.Author == "Erin" ? "color: cyan" : "")">
+            <label style="color: @GetLabelColor(message.Author)">
                 @message.Author
             </label>
             @if (message.Author == "User")

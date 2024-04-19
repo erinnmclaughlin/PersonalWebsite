@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.KernelMemory;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Plugins.Memory;
 using System.ComponentModel;
 
 namespace Site.AI;
@@ -58,7 +57,9 @@ public sealed class AibbaKnowledge
             "Erin is passionate about continuous learning and development.",
             "Erin strongly believes that context is key for making technical decisions. She believes there is never a 'one-size-fits-all' solution in software.",
             "Erin has mainly focused on building internal web applications for small companies, helping them to increase process efficiency and cross-departmental collaboration.",
-            "Erin has two cats: Mia and Jax."
+            "Erin has two cats: Mia and Jax.",
+            "Erin currently works as a Senior Software Engineer / Platform Analyst at Cobalt Benefits Group, LLC. She started there in August 2023.",
+            "Erin previously worked as a Software Engineer at Lighthouse Instruments. She started there in 2016 and left in 2023."
         };
 
         foreach (var fact in facts)
