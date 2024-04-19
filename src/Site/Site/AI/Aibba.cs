@@ -13,10 +13,11 @@ public sealed class Aibba
     private readonly OpenAIPromptExecutionSettings _promptExecutionSettings = new();
     private readonly Queue<TerminalChatMessage> _queue = [];
 
-    public Aibba(IOptions<AIOptions> options, AibbaPlugin plugin)
+    public Aibba(IOptions<AIOptions> options, AibbaKnowledge knowledge, AibbaNavigationPlugin navigationPlugin)
     {
         _kernel = options.Value.BuildDefaultKernel();
-        _kernel.Plugins.AddFromObject(plugin);
+        navigationPlugin.ApplyToKernel(_kernel);
+        knowledge.ApplyToKernel(_kernel);
 
         _promptExecutionSettings.ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions;
         
@@ -41,7 +42,8 @@ public sealed class Aibba
     {
         _messages.AddSystemMessage("""
             You are an AI assistant named Aibba and you are running on Erin McLaughlin's personal website. 
-            Erin is the software engineer that programmed you. Talk to users about her.
+            Erin is the software engineer that programmed you. 
+            Your job is to talk to users about her. Please note that you can recall information about Erin from your memory.
             """);
 
         AddErinMessage("Hi! Welcome to my website. I'm a software engineer with a passion for building context-driven systems.");

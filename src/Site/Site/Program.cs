@@ -10,7 +10,8 @@ builder.Services.AddRazorComponents()
 
 builder.Services.Configure<AIOptions>(builder.Configuration.GetSection("AI"));
 builder.Services.AddScoped<Aibba>();
-builder.Services.AddScoped<AibbaPlugin>();
+builder.Services.AddSingleton<AibbaKnowledge>();
+builder.Services.AddScoped<AibbaNavigationPlugin>();
 
 builder.Services.AddResponseCompression(o =>
 {
@@ -42,5 +43,11 @@ app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(typeof(Site.Client._Imports).Assembly);
 
 app.MapHub<AibbaHub>("/aibba");
+
+using (var scope = app.Services.CreateScope())
+{
+    var knowledge = scope.ServiceProvider.GetRequiredService<AibbaKnowledge>();
+    await knowledge.AddMemoriesAsync();
+}
 
 app.Run();
