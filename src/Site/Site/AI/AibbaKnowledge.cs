@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
+using Microsoft.KernelMemory;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
-using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Plugins.Memory;
 using System.ComponentModel;
 
@@ -9,20 +8,27 @@ namespace Site.AI;
 
 public sealed class AibbaKnowledge
 {
-    private readonly ISemanticTextMemory _memory;
+    private readonly MemoryServerless _memory;
 
     public AibbaKnowledge(IOptions<AIOptions> options)
     {
-        var memoryBuilder = new MemoryBuilder();
-        memoryBuilder.WithOpenAITextEmbeddingGeneration(options.Value.TextEmbeddingModel, options.Value.ApiKey);
-        memoryBuilder.WithMemoryStore(new VolatileMemoryStore());
-        _memory = memoryBuilder.Build();      
+        var aiOptions = options.Value;
+
+        _memory = new KernelMemoryBuilder()
+            .WithOpenAI(new OpenAIConfig
+            {
+                TextModel = aiOptions.TextCompletionModel,
+                TextModelMaxTokenTotal = 16384,
+                EmbeddingModel = aiOptions.TextEmbeddingModel,
+                EmbeddingModelMaxTokenTotal = 8191,
+                APIKey = aiOptions.ApiKey
+            })
+            .Build<MemoryServerless>();      
     }
 
     internal void ApplyToKernel(Kernel kernel)
     {
         kernel.Plugins.AddFromObject(this);
-        kernel.Plugins.AddFromObject(new TextMemoryPlugin(_memory));
     }
 
     [KernelFunction, Description("Get a link to Erin's GitHub profile.")]
@@ -34,10 +40,12 @@ public sealed class AibbaKnowledge
     [KernelFunction, Description("Get a link to Erin's resume.")]
     public static string GetResume() => "https://erinnmclaughlin.github.io/Resume";
 
-    [KernelFunction, Description("Recall information about Erin.")]
-    public async Task<string> RecallInformationAsync([Description("The input text to recall information for.")] string question, CancellationToken cancellationToken = default)
+    [KernelFunction, Description("Ask a question about Erin.")]
+    [return: Description("The answer to the question.")]
+    public async Task<string> Ask([Description("The input text to recall information for.")] string question, CancellationToken cancellationToken = default)
     {
-        return await new TextMemoryPlugin(_memory).RecallAsync(question, "AboutErin", cancellationToken: cancellationToken);
+        var answer = await _memory.AskAsync(question, cancellationToken: cancellationToken);
+        return answer.NoResult ? "I don't know the answer to that question." : answer.Result;
     }
 
     internal async Task AddMemoriesAsync()
@@ -53,9 +61,9 @@ public sealed class AibbaKnowledge
             "Erin has two cats: Mia and Jax."
         };
 
-        for (int i = 0; i < facts.Length; i++)
+        foreach (var fact in facts)
         {
-            await _memory.SaveInformationAsync("AboutErin", facts[i], $"info{i+1}");
+            await _memory.ImportTextAsync(fact);
         }
     }
 }
