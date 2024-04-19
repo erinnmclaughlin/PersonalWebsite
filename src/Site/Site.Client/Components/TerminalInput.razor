@@ -2,7 +2,7 @@
 
 <div>
     <label>User</label>
-    <EditForm Model="this" OnValidSubmit="SubmitAsync" @onclick="FocusInputFieldAsync">
+    <EditForm Model="this" OnValidSubmit="SubmitAsync" @onclick="FocusInputFieldAsync" style="padding-bottom: 4rem">
         <AntiforgeryToken />
         <DataAnnotationsValidator />
         @if (string.IsNullOrEmpty(Message))
