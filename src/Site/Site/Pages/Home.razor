@@ -1,7 +1,4 @@
 ﻿@page "/"
-@rendermode InteractiveServer
-
-<StarryBackground />
 
 <header>
 
@@ -21,12 +18,17 @@
 </header>
 
 <Terminal>
-    @if (Kernel is null)
+    @if (Preview)
     {
-        <Site.Client.Components.ComingSoon.StartupProgram />
+        <TerminalChat />
     }
     else
     {
-        <TerminalChat Kernel="Kernel" />
+        <Site.Client.Components.ComingSoon.StartupProgram />
     }
 </Terminal>
+
+@code {
+    [Parameter, SupplyParameterFromQuery]
+    public bool Preview { get; set; }
+}

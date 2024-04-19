@@ -1,0 +1,32 @@
+﻿@rendermode InteractiveAuto
+@attribute [StreamRendering]
+
+<AntiforgeryToken />
+
+<div class="terminal-chat">
+    @foreach (var message in Messages)
+    {
+        <div>
+            <label style="color: @GetLabelColor(message.Author)">
+                @message.Author
+            </label>
+            @if (message.Author == "User")
+            {
+                <p>@message.Message</p>
+            }
+            else
+            {
+                <TerminalChatContent Content="@message.Message" />
+            }
+        </div>
+    }
+
+    @if (State is ChatState.WaitingForAssistant)
+    {
+        <p>Thinking...</p>
+    }
+    else if (State is ChatState.WaitingForUser)
+    {
+        <TerminalInput OnUserInputReceived="RenderUserMessage" />
+    }
+</div>
