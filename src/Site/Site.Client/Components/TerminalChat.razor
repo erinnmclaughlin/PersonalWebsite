@@ -10,7 +10,14 @@
             <label style="@(message.Author == "Erin" ? "color: cyan" : "")">
                 @message.Author
             </label>
-            <p>@message.Message</p>
+            @if (message.Author == "User")
+            {
+                <p>@message.Message</p>
+            }
+            else
+            {
+                <TerminalChatContent Content="@message.Message" />
+            }
         </div>
     }
 

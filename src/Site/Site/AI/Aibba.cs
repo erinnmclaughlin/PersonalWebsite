@@ -3,7 +3,6 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Site.Client;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Site.AI;
 
@@ -26,15 +25,8 @@ public sealed class Aibba
 
     public Task TriggerResponse(string message, CancellationToken cancellationToken = default)
     {
-        AddUserMessage(message);
+        _messages.AddMessage(AuthorRole.User, message);
         return TriggerResponse(cancellationToken);
-    }
-
-    private async Task TriggerResponse(CancellationToken cancellationToken)
-    {
-        var chatService = _kernel.GetRequiredService<IChatCompletionService>();
-        var chatMessageContent = await chatService.GetChatMessageContentAsync(_messages, _promptExecutionSettings, _kernel, cancellationToken);
-        AddAibbaMessage(chatMessageContent.Content ?? string.Empty);
     }
 
     public IEnumerable<TerminalChatMessage> GetNextMessages()
@@ -43,11 +35,6 @@ public sealed class Aibba
         {
             yield return message;
         }
-    }
-
-    public bool TryGetNextMessage([NotNullWhen(true)] out TerminalChatMessage? message)
-    {
-        return _queue.TryDequeue(out message);
     }
 
     private void InitializeChatHistory()
@@ -77,8 +64,10 @@ public sealed class Aibba
         _queue.Enqueue(new TerminalChatMessage { Author = "Erin", Message = message });
     }
 
-    private void AddUserMessage(string message)
+    private async Task TriggerResponse(CancellationToken cancellationToken)
     {
-        _messages.AddMessage(AuthorRole.User, message);
+        var chatService = _kernel.GetRequiredService<IChatCompletionService>();
+        var chatMessageContent = await chatService.GetChatMessageContentAsync(_messages, _promptExecutionSettings, _kernel, cancellationToken);
+        AddAibbaMessage(chatMessageContent.Content ?? string.Empty);
     }
 }
