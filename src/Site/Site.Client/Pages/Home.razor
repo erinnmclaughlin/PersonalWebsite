@@ -1,5 +1,7 @@
 ﻿@page "/"
-@rendermode InteractiveServer
+@rendermode InteractiveAuto
+
+<AntiforgeryToken />
 
 <StarryBackground />
 
@@ -21,7 +23,7 @@
 </header>
 
 <Terminal>
-    @if (ShowAibbaChat)
+    @if (Preview)
     {
         <TerminalChat />
     }
@@ -30,3 +32,8 @@
         <Site.Client.Components.ComingSoon.StartupProgram />
     }
 </Terminal>
+
+@code {
+    [Parameter, SupplyParameterFromQuery]
+    public bool Preview { get; set; }
+}

@@ -1,23 +1,20 @@
-﻿@rendermode InteractiveServer
+﻿@rendermode InteractiveAuto
 @attribute [StreamRendering]
 
-<div class="terminal-chat">
+<AntiforgeryToken />
 
+<div class="terminal-chat">
     @foreach (var message in Messages)
     {
         <div>
             <label style="@(message.Author == "Erin" ? "color: cyan" : "")">
                 @message.Author
             </label>
-            <ChatContent Content="@message.Content" />
+            <p>@message.Message</p>
         </div>
     }
 
-    @if (State is ChatState.Loading)
-    {
-        <p>Loading...</p>
-    }
-    else if (State is ChatState.WaitingForAssistant)
+    @if (State is ChatState.WaitingForAssistant)
     {
         <p>Thinking...</p>
     }

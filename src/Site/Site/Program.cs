@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.ResponseCompression;
 using Site.AI;
 using Site.Components;
 
@@ -11,7 +12,13 @@ builder.Services.Configure<AIOptions>(builder.Configuration.GetSection("AI"));
 builder.Services.AddScoped<Aibba>();
 builder.Services.AddScoped<AibbaPlugin>();
 
+builder.Services.AddResponseCompression(o =>
+{
+    o.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["application/octet-stream"]);
+});
+
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -19,6 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
+    app.UseResponseCompression();
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
 }
@@ -32,5 +40,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Site.Client._Imports).Assembly);
+
+app.MapHub<AibbaHub>("/aibba");
 
 app.Run();

@@ -1,0 +1,22 @@
+﻿@* <p>@_renderedContent</p>
+
+@code {
+
+    private string _renderedContent = string.Empty;
+
+    [Parameter]
+    public CancellationTokenSource? CancellationTokenSource { get; set; }
+
+    [Parameter]
+    public string? Content { get; set; }
+
+    [Parameter]
+    public EventCallback OnRenderingCompleted { get; set; }
+
+    protected override void OnInitialized()
+    {
+        InvokeAsync(RenderMessageAsync);
+    }
+
+}
+ *@

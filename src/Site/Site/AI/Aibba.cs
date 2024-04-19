@@ -2,17 +2,17 @@
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using Site.Components;
+using Site.Client;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Site.AI;
 
-internal sealed class Aibba
+public sealed class Aibba
 {
     private readonly Kernel _kernel;
     private readonly ChatHistory _messages = [];
     private readonly OpenAIPromptExecutionSettings _promptExecutionSettings = new();
-    private readonly Queue<ChatMessage> _queue = [];
+    private readonly Queue<TerminalChatMessage> _queue = [];
 
     public Aibba(IOptions<AIOptions> options, AibbaPlugin plugin)
     {
@@ -37,7 +37,15 @@ internal sealed class Aibba
         AddAibbaMessage(chatMessageContent.Content ?? string.Empty);
     }
 
-    public bool TryGetNextMessage([NotNullWhen(true)] out ChatMessage? message)
+    public IEnumerable<TerminalChatMessage> GetNextMessages()
+    {
+        while (_queue.TryDequeue(out var message))
+        {
+            yield return message;
+        }
+    }
+
+    public bool TryGetNextMessage([NotNullWhen(true)] out TerminalChatMessage? message)
     {
         return _queue.TryDequeue(out message);
     }
@@ -60,13 +68,13 @@ internal sealed class Aibba
     private void AddAibbaMessage(string message)
     {
         _messages.AddMessage(AuthorRole.Assistant, message);
-        _queue.Enqueue(new("Aibba") { Content = message });
+        _queue.Enqueue(new TerminalChatMessage { Author = "Aibba", Message = message });
     }
 
     private void AddErinMessage(string message)
     {
         _messages.AddMessage(AuthorRole.System, message);
-        _queue.Enqueue(new("Erin") { Content = message });
+        _queue.Enqueue(new TerminalChatMessage { Author = "Erin", Message = message });
     }
 
     private void AddUserMessage(string message)

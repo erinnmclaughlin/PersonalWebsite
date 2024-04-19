@@ -2,7 +2,7 @@
 
 namespace Site.AI;
 
-internal sealed class AIOptions
+public sealed class AIOptions
 {
     public string ApiKey { get; set; } = string.Empty;
     public bool Enabled { get; set; }
