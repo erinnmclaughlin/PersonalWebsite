@@ -59,7 +59,8 @@ public sealed class AibbaKnowledge
             "Erin has mainly focused on building internal web applications for small companies, helping them to increase process efficiency and cross-departmental collaboration.",
             "Erin has two cats: Mia and Jax.",
             "Erin currently works as a Senior Software Engineer / Platform Analyst at Cobalt Benefits Group, LLC. She started there in August 2023.",
-            "Erin previously worked as a Software Engineer at Lighthouse Instruments. She started there in 2016 and left in 2023."
+            "Erin previously worked as a Software Engineer at Lighthouse Instruments. She started there as a laboratory technician in 2016 and transitioned to software engineer by 2019. Erin left Lighthouse in 2023.",
+            "Erin's favorite color is yellow."
         };
 
         foreach (var fact in facts)
