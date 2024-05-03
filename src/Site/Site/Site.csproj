@@ -10,9 +10,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Site.Client\Site.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.4" />
-    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.36.240416.1" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.7.1" />
-    <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.7.1-alpha" />
+    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.40.240501.1" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.10.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.10.0-alpha" />
   </ItemGroup>
 
 </Project>
