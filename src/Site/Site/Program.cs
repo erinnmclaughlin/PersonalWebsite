@@ -1,17 +1,14 @@
 using Microsoft.AspNetCore.ResponseCompression;
-using Site.AI;
 using Site.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorComponents()
+builder.AddAibbaDefaults();
+
+builder.Services
+    .AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
-
-builder.Services.Configure<AIOptions>(builder.Configuration.GetSection("AI"));
-builder.Services.AddScoped<Aibba>();
-builder.Services.AddSingleton<AibbaKnowledge>();
-builder.Services.AddScoped<AibbaNavigationPlugin>();
 
 builder.Services.AddResponseCompression(o =>
 {
@@ -19,7 +16,6 @@ builder.Services.AddResponseCompression(o =>
 });
 
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
@@ -42,12 +38,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Site.Client._Imports).Assembly);
 
-app.MapHub<AibbaHub>("/aibba");
-
-using (var scope = app.Services.CreateScope())
-{
-    var knowledge = scope.ServiceProvider.GetRequiredService<AibbaKnowledge>();
-    await knowledge.AddMemoriesAsync();
-}
+await app.UseAibba();
 
 app.Run();

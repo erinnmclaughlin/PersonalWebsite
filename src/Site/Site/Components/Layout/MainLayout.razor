@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+
+<StarryBackground />
+
+<header>
+
+    <div>
+        <h1 class="title">erin mclaughlin</h1>
+        <nav>
+            @foreach (var (name, url) in NavLinks)
+            {
+                <span class="link">
+                    <a href="@url" target="_blank">@name</a>
+                </span>
+            }
+        </nav>
+    </div>
+
+    <VeryRealisticAnimationOfMyselfAndJax />
+
+</header>
+
+@Body
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+@code {
+    private Dictionary<string, string> NavLinks = new()
+    {
+        ["github"] = "https://github.com/erinnmclaughlin",
+        ["linked in"] = "https://www.linkedin.com/in/e1mclaughlin",
+        ["resume"] = "https://erinnmclaughlin.github.io/Resume/"
+    };
+}
