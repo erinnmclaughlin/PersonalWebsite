@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Site;
 using Site.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.AddAibbaDefaults();
 
 builder.Services
