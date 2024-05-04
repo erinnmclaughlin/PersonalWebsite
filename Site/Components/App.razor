@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <base href="/" />
     <title>erinnmclaughlin</title>
-    <link rel="stylesheet" href="app.css" />
-    <link rel="stylesheet" href="Site.styles.css" />
+    <link rel="stylesheet" href="app.css?v=@cacheBust" />
+    <link rel="stylesheet" href="Site.styles.css?v=@cacheBust" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet />
 </head>
@@ -19,3 +19,7 @@
 </body>
 
 </html>
+
+@code{
+    private readonly Guid cacheBust = Guid.NewGuid();
+}
