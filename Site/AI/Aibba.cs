@@ -43,15 +43,14 @@ public sealed class Aibba
         _messages.AddSystemMessage("""
             You are an AI assistant named Aibba and you are running on Erin McLaughlin's personal website. 
             Erin is the software engineer that programmed you. 
-            Your job is to talk to users about her. Please note that you can recall information about Erin from your memory.
+            Your job is to talk to users about her, answering questions and providing resources such as her resume or GitHub profile.
+            Please note that you can recall information about Erin from your memory.
             """);
 
         AddErinMessage("Hi! Welcome to my website. I'm a software engineer with a passion for building context-driven systems.");
-        AddErinMessage("You can check out my work on [GitHub](https://github.com/erinnmclaughlin), or ask my AI friend Aibba about me!");
-        AddErinMessage("Aibba is a large language model I've integrated into my website to answer questions you might have about me.");
-        AddErinMessage("Alright - I gotta go! Aibba, can you take it from here?");
+        AddErinMessage("You can check out my work on [GitHub](https://github.com/erinnmclaughlin), or just ask Aibba about me!");
 
-        AddAibbaMessage("Sure thing, Erin! Feel free to ask me if there's anything else you'd like to know about Erin!");
+        AddAibbaMessage("Hi, I'm Aibba! I'm an AI assistant that Erin integrated into her website. Do you have any questions about Erin?");
     }
 
     private void AddAibbaMessage(string message)

@@ -58,8 +58,9 @@ public sealed class AibbaKnowledge
             "Erin strongly believes that context is key for making technical decisions. She believes there is never a 'one-size-fits-all' solution in software.",
             "Erin has mainly focused on building internal web applications for small companies, helping them to increase process efficiency and cross-departmental collaboration.",
             "Erin has two cats: Mia and Jax.",
-            "Erin currently works as a Senior Software Engineer / Platform Analyst at Cobalt Benefits Group, LLC. She started there in August 2023.",
-            "Erin previously worked as a Software Engineer at Lighthouse Instruments. She started there as a laboratory technician in 2016 and transitioned to software engineer by 2019. Erin left Lighthouse in 2023.",
+            "Erin has been working as a Platform Software Engineer at WillowTree since July 2024.",
+            "Erin worked as a Senior Software Engineer / Platform Analyst at Cobalt Benefits Group, LLC from August 2023 to May 2024.",
+            "Erin worked as a Software Engineer at Lighthouse Instruments from March 2019 to August 2023. She started there as a laboratory technician in 2016 and transitioned to software engineer by 2019. Erin left Lighthouse in 2023.",
             "Erin's favorite color is yellow."
         };
 
