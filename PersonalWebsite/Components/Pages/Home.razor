@@ -2,32 +2,34 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
-
-@foreach (var message in _chatMessages)
-{
-    <div class="message @message.Role">
-        <label>@message.Role</label>
-        <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Text))</p>
-    </div>
-}
-
-@if (StreamingMessageParts.Count > 0)
-{
-    <div class="message">
-        <label>Assistant</label>
-        <p>
-            @foreach (var part in StreamingMessageParts)
+<div class="container">
+    <div class="chat-container">
+        
+        <div id="messagesContainer" class="messages-container">
+            @foreach (var message in _chatMessages)
             {
-                <text>@part</text>
+                <div class="message @message.Role">
+                    <label>@message.Role</label>
+                    <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Text))</p>
+                </div>
             }
-        </p>
-    </div>
-}
 
-<EditForm Model="this" OnSubmit="Submit">
-    <label>User</label>
-    <p>
-        <InputText @bind-Value="@InputField" />
-    </p>
-</EditForm>
+            @if (StreamingMessage.Length > 0)
+            {
+                <div class="message assistant">
+                    <label>Assistant</label>
+                    <p>@((MarkupString)Markdig.Markdown.ToHtml(StreamingMessage))</p>
+                </div>
+            }
+        </div>
+
+        <div class="input-container">
+            <EditForm Model="this" OnSubmit="Submit">
+                <div class="input-group">
+                    <InputText @bind-Value="@InputField" placeholder="Type your message here..." autocomplete="off" />
+                    <button type="submit" class="submit-button">Send</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
