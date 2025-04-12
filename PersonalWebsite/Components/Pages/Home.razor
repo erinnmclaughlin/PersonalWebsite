@@ -1,0 +1,33 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+@foreach (var message in _chatMessages)
+{
+    <div class="message @message.Role">
+        <label>@message.Role</label>
+        <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Text))</p>
+    </div>
+}
+
+@if (StreamingMessageParts.Count > 0)
+{
+    <div class="message">
+        <label>Assistant</label>
+        <p>
+            @foreach (var part in StreamingMessageParts)
+            {
+                <text>@part</text>
+            }
+        </p>
+    </div>
+}
+
+<EditForm Model="this" OnSubmit="Submit">
+    <label>User</label>
+    <p>
+        <InputText @bind-Value="@InputField" />
+    </p>
+</EditForm>
