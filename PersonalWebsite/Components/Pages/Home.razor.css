@@ -1,18 +1,22 @@
 ﻿.container {
+    --lottie-height: clamp(125px, 15vh, 200px);
+}
+
+.container {
     max-width: 800px;
     margin: 0 auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
-    padding: calc(125px + 1.5rem) 1.5rem 1.5rem;
+    padding: calc((var(--lottie-height) * 5 / 8) + 1rem) 1.5rem 1.5rem;
 }
 
 .lottie {
     position: absolute;
-    top: 1.5rem;
+    top: 1rem;
     right: 0;
-    height: 200px;
+    height: var(--lottie-height);
     transform: rotateY(180deg);
 }
 
@@ -200,8 +204,6 @@ h1 {
     }
     
     .lottie {
-        top: 1rem;
-        right: 0;
         height: 160px;
     }
     

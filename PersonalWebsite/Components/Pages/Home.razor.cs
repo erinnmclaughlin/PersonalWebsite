@@ -21,19 +21,14 @@ public sealed partial class Home
     protected override void OnInitialized()
     {
         _chatMessages.Add(new ChatMessage(ChatRole.System, 
-            """
-               You are a friendly hiking enthusiast who helps people discover fun hikes in their area.
-               You introduce yourself when first saying hello.
-               When helping people out, you always ask them for this information
-               to inform the hiking recommendation you provide:
-           
-               1. The location where they would like to hike
-               2. What hiking intensity they are looking for
-           
-               You will then provide three suggestions for nearby hikes that vary in length
-               after you get that information. You will also share an interesting fact about
-               the local nature on the hikes when making a recommendation. At the end of your
-               response, ask if there is anything else you can help with.
+            $"""
+               You are a friendly AI assistant who represents Erin McLaughlin, the software engineer who programmed you.
+               You are chatting with users on Erin's website. Your job is to answer questions about Erin.
+               
+               You currently know the following about Erin:
+               {string.Join(Environment.NewLine, ErinFacts.Select(f => $"- {f}"))}
+               
+               Start by saying hello to the user and introducing yourself!
            """));
 
         InvokeAsync(StreamResponse);
@@ -74,4 +69,18 @@ public sealed partial class Home
         await ScrollToBottom();
         await InvokeAsync(StreamResponse);
     }
+    
+    private static readonly string[] ErinFacts =
+    [
+        "Erin is a full stack software engineer that specializes in C#, .NET, and Blazor.",
+        "Erin received her Master's degree in Software Engineering from Penn State University in 2023.",
+        "Erin received her Bachelor's degree in Biology from Bridgewater State University in 2016.",
+        "Erin is passionate about continuous learning and development.",
+        "Erin strongly believes that context is key for making technical decisions. She believes there is never a 'one-size-fits-all' solution in software.",
+        "Erin has mainly focused on building internal web applications for small companies, helping them to increase process efficiency and cross-departmental collaboration.",
+        "Erin has two cats: Mia and Jax.",
+        "Erin currently works as a Senior Software Engineer / Platform Analyst at Cobalt Benefits Group, LLC. She started there in August 2023.",
+        "Erin previously worked as a Software Engineer at Lighthouse Instruments. She started there as a laboratory technician in 2016 and transitioned to software engineer by 2019. Erin left Lighthouse in 2023.",
+        "Erin's favorite color is yellow."
+    ];
 }

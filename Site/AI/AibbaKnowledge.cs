@@ -49,7 +49,7 @@ public sealed class AibbaKnowledge
 
     internal async Task AddMemoriesAsync()
     {
-        var facts = new string[]
+        var facts = new[]
         {
             "Erin is a full stack software engineer that specializes in C#, .NET, and Blazor.",
             "Erin received her Master's degree in Software Engineering from Penn State University in 2023.",
