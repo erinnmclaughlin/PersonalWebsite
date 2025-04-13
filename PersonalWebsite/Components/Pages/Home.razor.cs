@@ -11,6 +11,7 @@ public sealed partial class Home
     
     private string InputField { get; set; } = string.Empty;
     private string StreamingMessage { get; set; } = "";
+    private bool _showChat { get; set; } = false;
     
     public Home(IChatClient chatClient, IJSRuntime jsRuntime)
     {
@@ -30,8 +31,17 @@ public sealed partial class Home
                
                Start by saying hello to the user and introducing yourself!
            """));
+    }
 
+    private void OpenChat()
+    {
+        _showChat = true;
         InvokeAsync(StreamResponse);
+    }
+
+    private void CloseChat()
+    {
+        _showChat = false;
     }
 
     private async Task ScrollToBottom()
