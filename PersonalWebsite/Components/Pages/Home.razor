@@ -1,92 +1,41 @@
 ﻿@page "/"
+@page "/-"
+@layout Layout.DeviceLayout
 
-<PageTitle>erin mclaughlin &middot; software developer</PageTitle>
-
-<div class="container">
-    
-    <div class="lottie">
-        <LottiePlayer Source="woman_working.json"></LottiePlayer>
+<div class="home-screen">
+    <div class="status-bar">
+        <div class="time">@DateTime.Now.ToString("h:mm")</div>
     </div>
-    
-    <div class="device">
-        <div class="device-screen">
-            @if (!_showChat)
-            {
-                <div class="home-screen">
-                    <div class="status-bar">
-                        <div class="time">@DateTime.Now.ToString("h:mm")</div>
-                    </div>
-                    <div class="app-grid">
-                        <div class="app-icon" @onclick="OpenChat">
-                            <div class="app-icon-img messages-icon"></div>
-                            <span class="app-name">Messages</span>
-                        </div>
-                        <div class="app-icon">
-                            <div class="app-icon-img photos-icon"></div>
-                            <span class="app-name">Photos</span>
-                        </div>
-                        <div class="app-icon">
-                            <div class="app-icon-img safari-icon"></div>
-                            <span class="app-name">Safari</span>
-                        </div>
-                        <div class="app-icon">
-                            <div class="app-icon-img music-icon"></div>
-                            <span class="app-name">Music</span>
-                        </div>
-                    </div>
-                    <div class="dock">
-                        <div class="app-icon" @onclick="OpenChat">
-                            <div class="app-icon-img messages-icon"></div>
-                        </div>
-                        <div class="app-icon">
-                            <div class="app-icon-img phone-icon"></div>
-                        </div>
-                        <div class="app-icon">
-                            <div class="app-icon-img mail-icon"></div>
-                        </div>
-                        <div class="app-icon">
-                            <div class="app-icon-img safari-icon"></div>
-                        </div>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="messages-app">
-                    <div class="messages-header">
-                        <button class="back-button" @onclick="CloseChat">
-                            <span>&lt;</span>
-                        </button>
-                        <span class="messages-title">Chat</span>
-                    </div>
-                    <div id="messagesContainer" class="messages-container">
-                        @foreach (var message in _chatMessages)
-                        {
-                            <div class="message @message.Role">
-                                <label>@message.Role</label>
-                                <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Text))</p>
-                            </div>
-                        }
-
-                        @if (StreamingMessage.Length > 0)
-                        {
-                            <div class="message assistant">
-                                <label>Assistant</label>
-                                <p>@((MarkupString)Markdig.Markdown.ToHtml(StreamingMessage))</p>
-                            </div>
-                        }
-                    </div>
-
-                    <div class="input-container">
-                        <EditForm Model="this" OnSubmit="Submit">
-                            <div class="input-group">
-                                <InputText @bind-Value="@InputField" placeholder="Type your message here..." autocomplete="off"/>
-                                <button type="submit" class="submit-button">Send</button>
-                            </div>
-                        </EditForm>
-                    </div>
-                </div>
-            }
+    <div class="app-grid">
+        <a class="app-icon" href="-/messages">
+            <div class="app-icon-img messages-icon"></div>
+            <span class="app-name">Messages</span>
+        </a>
+        <div class="app-icon">
+            <div class="app-icon-img photos-icon"></div>
+            <span class="app-name">Photos</span>
+        </div>
+        <div class="app-icon">
+            <div class="app-icon-img safari-icon"></div>
+            <span class="app-name">Safari</span>
+        </div>
+        <div class="app-icon">
+            <div class="app-icon-img music-icon"></div>
+            <span class="app-name">Music</span>
+        </div>
+    </div>
+    <div class="dock">
+        <a class="app-icon" href="-/messages">
+            <div class="app-icon-img messages-icon"></div>
+        </a>
+        <div class="app-icon">
+            <div class="app-icon-img phone-icon"></div>
+        </div>
+        <div class="app-icon">
+            <div class="app-icon-img mail-icon"></div>
+        </div>
+        <div class="app-icon">
+            <div class="app-icon-img safari-icon"></div>
         </div>
     </div>
 </div>
