@@ -7,17 +7,15 @@
 }
 
 .status-bar {
-    height: 30px;
-    padding: 5px 20px;
+    padding: 0.5rem;
     display: flex;
-    justify-content: center;
     align-items: center;
     color: white;
     font-weight: 500;
-}
-
-.time {
-    font-size: 14px;
+    font-size: 0.875rem;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 .app-grid {

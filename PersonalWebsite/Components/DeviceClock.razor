@@ -1,0 +1,28 @@
+﻿@using System.Timers
+@implements IDisposable
+
+<span>
+    @DateTime.Now.ToLocalTime().ToString("h:mm tt")
+</span>
+
+@code {
+    private readonly Timer _timer = new(TimeSpan.FromSeconds(1));
+
+    public DeviceClock()
+    {
+        _timer.Elapsed += HandleTick;
+        _timer.Start();
+    }
+    
+    public void Dispose()
+    {
+        _timer.Stop();
+        _timer.Elapsed -= HandleTick;
+        _timer.Dispose();
+    }
+
+    private void HandleTick(object? sender, ElapsedEventArgs e)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+}
