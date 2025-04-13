@@ -1,10 +1,19 @@
 ﻿.container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    padding: 125px 2rem 2rem;
+}
+
+.lottie {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 200px;
+    transform: rotateY(180deg);
 }
 
 .chat-container {

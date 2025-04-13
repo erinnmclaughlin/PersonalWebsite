@@ -28,6 +28,11 @@ body {
     padding: 0;
 }
 
+lottie-player {
+    height: inherit;
+    width: fit-content;
+}
+
 p {
     line-height: 1.6;
 }

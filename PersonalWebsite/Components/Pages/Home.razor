@@ -3,8 +3,13 @@
 <PageTitle>Home</PageTitle>
 
 <div class="container">
+    
+    <div class="lottie">
+        <LottiePlayer Source="woman_working.json"></LottiePlayer>
+    </div>
+    
     <div class="chat-container">
-        
+
         <div id="messagesContainer" class="messages-container">
             @foreach (var message in _chatMessages)
             {
@@ -26,7 +31,7 @@
         <div class="input-container">
             <EditForm Model="this" OnSubmit="Submit">
                 <div class="input-group">
-                    <InputText @bind-Value="@InputField" placeholder="Type your message here..." autocomplete="off" />
+                    <InputText @bind-Value="@InputField" placeholder="Type your message here..." autocomplete="off"/>
                     <button type="submit" class="submit-button">Send</button>
                 </div>
             </EditForm>
