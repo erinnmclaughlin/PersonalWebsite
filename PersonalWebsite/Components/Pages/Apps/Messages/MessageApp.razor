@@ -1,13 +1,7 @@
 ﻿@page "/apps/messages"
 @layout Layout.DeviceLayout
 
-<div class="messages-app">
-    <div class="messages-header">
-        <a href="apps" class="back-button">
-            <span>&lt;</span>
-        </a>
-        <span class="messages-title">Chat</span>
-    </div>
+<AppContainer AppName="Messages">
     <div id="messagesContainer" class="messages-container">
         @foreach (var message in _chatMessages)
         {
@@ -34,4 +28,4 @@
             </div>
         </EditForm>
     </div>
-</div>
+</AppContainer>

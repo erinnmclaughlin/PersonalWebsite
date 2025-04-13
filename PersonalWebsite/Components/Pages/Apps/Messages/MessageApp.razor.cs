@@ -2,9 +2,9 @@
 using Microsoft.Extensions.AI;
 using Microsoft.JSInterop;
 
-namespace PersonalWebsite.Components.Pages;
+namespace PersonalWebsite.Components.Pages.Apps.Messages;
 
-public sealed partial class Messages
+public sealed partial class MessageApp
 {
     private readonly IChatClient _chatClient;
     private readonly List<ChatMessage> _chatMessages = [];
@@ -13,7 +13,7 @@ public sealed partial class Messages
     private string InputField { get; set; } = string.Empty;
     private string StreamingMessage { get; set; } = "";
     
-    public Messages(IChatClient chatClient, IJSRuntime jsRuntime)
+    public MessageApp(IChatClient chatClient, IJSRuntime jsRuntime)
     {
         _chatClient = chatClient;
         _jsRuntime = jsRuntime;
@@ -49,22 +49,24 @@ public sealed partial class Messages
             
             await SaveMessages();
         }
-        else
-        {
-            await ScrollToBottom();
-        }
+
+        //await Task.Delay(30);
         
         if (_chatMessages.LastOrDefault()?.Role != ChatRole.Assistant)
         {
             await StreamResponse();
         }
+        else
+        {
+            await ScrollToBottom();
+        }
         
-        await InvokeAsync(StateHasChanged);
+        //await InvokeAsync(StateHasChanged);
     }
     
     private async Task ScrollToBottom()
     {
-        await _jsRuntime.InvokeVoidAsync("scrollElementToBottom", "messagesContainer");
+        await _jsRuntime.InvokeVoidAsync("scrollElementToBottom", "deviceScreen");
     }
 
     private async Task StreamResponse()
@@ -80,8 +82,8 @@ public sealed partial class Messages
         StreamingMessage = "";
         StateHasChanged();
         
-        await ScrollToBottom();
         await SaveMessages();
+        await ScrollToBottom();
     }
 
     private async Task Submit()

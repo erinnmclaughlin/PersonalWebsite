@@ -1,0 +1,19 @@
+﻿<div id="app" class="app">
+    <div class="app-header">
+        <a href="apps" class="back-button">
+            <span>&lt;</span>
+        </a>
+        <span class="app-title">@AppName</span>
+    </div>
+    <div class="app-content">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public required string AppName { get; init; }
+    
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

@@ -1,0 +1,13 @@
+﻿@page "/apps/photos"
+@layout Layout.DeviceLayout
+
+<AppContainer AppName="Photos">
+   <div class="photos">
+      @foreach (var photo in _photos)
+      {
+         <div class="image">
+            <img alt="" src="@photo" />
+         </div>
+      }
+   </div>
+</AppContainer>
