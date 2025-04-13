@@ -1,5 +1,5 @@
 ﻿@page "/"
-@page "/-"
+@page "/apps"
 @layout Layout.DeviceLayout
 
 <div class="home-screen">
@@ -7,7 +7,7 @@
         <div class="time">@DateTime.Now.ToString("h:mm")</div>
     </div>
     <div class="app-grid">
-        <a class="app-icon" href="-/messages">
+        <a class="app-icon" href="apps/messages">
             <div class="app-icon-img messages-icon"></div>
             <span class="app-name">Messages</span>
         </a>
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="dock">
-        <a class="app-icon" href="-/messages">
+        <a class="app-icon" href="apps/messages">
             <div class="app-icon-img messages-icon"></div>
         </a>
         <div class="app-icon">

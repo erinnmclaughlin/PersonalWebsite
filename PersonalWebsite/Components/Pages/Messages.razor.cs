@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.AI;
+﻿using System.Text.Json;
+using Microsoft.Extensions.AI;
 using Microsoft.JSInterop;
-using PersonalWebsite.Storage;
 
 namespace PersonalWebsite.Components.Pages;
 
@@ -9,16 +9,14 @@ public sealed partial class Messages
     private readonly IChatClient _chatClient;
     private readonly List<ChatMessage> _chatMessages = [];
     private readonly IJSRuntime _jsRuntime;
-    private readonly IStorageProvider _storageProvider;
 
     private string InputField { get; set; } = string.Empty;
     private string StreamingMessage { get; set; } = "";
     
-    public Messages(IChatClient chatClient, IJSRuntime jsRuntime, IStorageProvider storageProvider)
+    public Messages(IChatClient chatClient, IJSRuntime jsRuntime)
     {
         _chatClient = chatClient;
         _jsRuntime = jsRuntime;
-        _storageProvider = storageProvider;
     }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -50,6 +48,10 @@ public sealed partial class Messages
                 """));
             
             await SaveMessages();
+        }
+        else
+        {
+            await ScrollToBottom();
         }
         
         if (_chatMessages.LastOrDefault()?.Role != ChatRole.Assistant)
@@ -99,22 +101,24 @@ public sealed partial class Messages
         await InvokeAsync(StreamResponse);
     }
 
-    private async Task SaveMessages()
-    {
-        var messages = _chatMessages.Select(x => new LocalChatMessage(x.Role, x.Text)).ToList();
-        await _storageProvider.Set("messages", messages);
-    }
-
     private async Task LoadMessages()
     {
-        //if (!await _storageProvider.ContainsKey("messages"))
-        //    return;
+        var json = await _jsRuntime.InvokeAsync<string?>("localStorage.getItem", "messages");
 
-        var messages = await _storageProvider.Get<List<LocalChatMessage>?>("messages") ?? [];
-        foreach (var message in messages)
+        if (json is null) return;
+        
+        foreach (var message in JsonSerializer.Deserialize<List<LocalChatMessage>>(json) ?? [])
         {
             _chatMessages.Add(new ChatMessage(message.Role, message.Content));
         }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task SaveMessages()
+    {
+        var messages = _chatMessages.Select(x => new LocalChatMessage(x.Role, x.Text)).ToList();
+        await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "messages", JsonSerializer.Serialize(messages));
     }
 
     private sealed record LocalChatMessage(ChatRole Role, string Content);
