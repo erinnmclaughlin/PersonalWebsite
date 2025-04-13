@@ -1,11 +1,14 @@
 ﻿using Microsoft.Extensions.AI;
 using OpenAI;
 using PersonalWebsite.Components;
+using PersonalWebsite.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 builder.Services.AddChatClient(BuildChatClient()).UseFunctionInvocation().UseLogging();
+
+builder.Services.AddTransient<IStorageProvider, LocalStorage>();
 
 var app = builder.Build();
 
