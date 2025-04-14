@@ -1,32 +1,209 @@
 ﻿@page "/apps/messages"
-@layout Layout.DeviceLayout
 @rendermode InteractiveServer
 
-<AppContainer AppName="Messages">
-    <div id="messagesContainer" class="messages-container">
-        @foreach (var message in _chatMessages)
-        {
-            <div class="message @message.Role">
-                <label>@message.Role</label>
-                <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Text))</p>
+<CascadingValue Value="IsInWindow" Name="IsInWindow">
+    @if (IsInWindow)
+    {
+        <div class="messages-app">
+            <div class="contacts-sidebar">
+                <div class="search-container">
+                    <input type="text" placeholder="Search messages" class="search-input" />
+                </div>
+                
+                <div class="contacts-list">
+                    @foreach (var contact in Contacts)
+                    {
+                        <div class="contact-item @(contact.Id == SelectedContactId ? "selected" : "")" 
+                             @onclick="() => SelectContact(contact.Id)">
+                            <div class="contact-avatar">
+                                @contact.AvatarEmoji
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">@contact.Name</div>
+                                <div class="contact-preview">@contact.LastMessage</div>
+                            </div>
+                            <div class="contact-meta">
+                                <div class="contact-time">@contact.LastMessageTime</div>
+                                @if (contact.UnreadCount > 0)
+                                {
+                                    <div class="contact-badge">@contact.UnreadCount</div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+                <div class="contacts-actions">
+                    <button class="new-message-button">
+                        <span class="new-message-icon">✉️</span>
+                        <span>New Message</span>
+                    </button>
+                </div>
             </div>
-        }
-
-        @if (StreamingMessage.Length > 0)
-        {
-            <div class="message assistant">
-                <label>Assistant</label>
-                <p>@((MarkupString)Markdig.Markdown.ToHtml(StreamingMessage))</p>
+            
+            <div class="chat-area">
+                @if (SelectedContactId != null)
+                {
+                    var selectedContact = Contacts.FirstOrDefault(c => c.Id == SelectedContactId);
+                    
+                    <div class="chat-header">
+                        <div class="chat-header-info">
+                            <div class="chat-avatar">@selectedContact?.AvatarEmoji</div>
+                            <div class="chat-name">@selectedContact?.Name</div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="chat-action-button">📞</button>
+                            <button class="chat-action-button">📹</button>
+                            <button class="chat-action-button">ℹ️</button>
+                        </div>
+                    </div>
+                    
+                    <div id="messagesContainer" class="chat-messages">
+                        @foreach (var message in GetMessagesForContact(SelectedContactId))
+                        {
+                            <div class="message @(message.IsFromMe ? "outgoing" : "incoming")">
+                                <div class="message-bubble">
+                                    <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Text))</p>
+                                </div>
+                                <div class="message-time">@message.Time</div>
+                            </div>
+                        }
+                        
+                        @if (IsTyping && SelectedContactId == "assistant")
+                        {
+                            <div class="typing-indicator">
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                            </div>
+                        }
+                    </div>
+                    
+                    <div class="chat-input">
+                        <div class="input-actions">
+                            <button class="input-action-button">😀</button>
+                            <button class="input-action-button">📎</button>
+                        </div>
+                        <EditForm Model="this" OnSubmit="Submit">
+                            <div class="input-group">
+                                <InputText @bind-Value="@InputField" placeholder="Type a message..." autocomplete="off"/>
+                                <button type="submit" class="submit-button">Send</button>
+                            </div>
+                        </EditForm>
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-chat">
+                        <div class="empty-chat-icon">💬</div>
+                        <h2>Select a conversation</h2>
+                        <p>Choose a contact to start chatting</p>
+                    </div>
+                }
             </div>
-        }
-    </div>
-
-    <div class="input-container">
-        <EditForm Model="this" OnSubmit="Submit">
-            <div class="input-group">
-                <InputText @bind-Value="@InputField" placeholder="Type your message here..." autocomplete="off"/>
-                <button type="submit" class="submit-button">Send</button>
+        </div>
+    }
+    else
+    {
+        <AppContainer AppName="Messages">
+            <div class="messages-app standalone-mode">
+                <div class="contacts-sidebar">
+                    <div class="search-container">
+                        <input type="text" placeholder="Search messages" class="search-input" />
+                    </div>
+                    
+                    <div class="contacts-list">
+                        @foreach (var contact in Contacts)
+                        {
+                            <div class="contact-item @(contact.Id == SelectedContactId ? "selected" : "")" 
+                                 @onclick="() => SelectContact(contact.Id)">
+                                <div class="contact-avatar">
+                                    @contact.AvatarEmoji
+                                </div>
+                                <div class="contact-info">
+                                    <div class="contact-name">@contact.Name</div>
+                                    <div class="contact-preview">@contact.LastMessage</div>
+                                </div>
+                                <div class="contact-meta">
+                                    <div class="contact-time">@contact.LastMessageTime</div>
+                                    @if (contact.UnreadCount > 0)
+                                    {
+                                        <div class="contact-badge">@contact.UnreadCount</div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    
+                    <div class="contacts-actions">
+                        <button class="new-message-button">
+                            <span class="new-message-icon">✉️</span>
+                            <span>New Message</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chat-area">
+                    @if (SelectedContactId != null)
+                    {
+                        var selectedContact = Contacts.FirstOrDefault(c => c.Id == SelectedContactId);
+                        
+                        <div class="chat-header">
+                            <div class="chat-header-info">
+                                <div class="chat-avatar">@selectedContact?.AvatarEmoji</div>
+                                <div class="chat-name">@selectedContact?.Name</div>
+                            </div>
+                            <div class="chat-actions">
+                                <button class="chat-action-button">📞</button>
+                                <button class="chat-action-button">📹</button>
+                                <button class="chat-action-button">ℹ️</button>
+                            </div>
+                        </div>
+                        
+                        <div id="messagesContainerStandalone" class="chat-messages">
+                            @foreach (var message in GetMessagesForContact(SelectedContactId))
+                            {
+                                <div class="message @(message.IsFromMe ? "outgoing" : "incoming")">
+                                    <div class="message-bubble">
+                                        <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Text))</p>
+                                    </div>
+                                    <div class="message-time">@message.Time</div>
+                                </div>
+                            }
+                            
+                            @if (IsTyping && SelectedContactId == "assistant")
+                            {
+                                <div class="typing-indicator">
+                                    <div class="typing-dot"></div>
+                                    <div class="typing-dot"></div>
+                                    <div class="typing-dot"></div>
+                                </div>
+                            }
+                        </div>
+                        
+                        <div class="chat-input">
+                            <div class="input-actions">
+                                <button class="input-action-button">😀</button>
+                                <button class="input-action-button">📎</button>
+                            </div>
+                            <EditForm Model="this" OnSubmit="Submit">
+                                <div class="input-group">
+                                    <InputText @bind-Value="@InputField" placeholder="Type a message..." autocomplete="off"/>
+                                    <button type="submit" class="submit-button">Send</button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-chat">
+                            <div class="empty-chat-icon">💬</div>
+                            <h2>Select a conversation</h2>
+                            <p>Choose a contact to start chatting</p>
+                        </div>
+                    }
+                </div>
             </div>
-        </EditForm>
-    </div>
-</AppContainer>
+        </AppContainer>
+    }
+</CascadingValue>

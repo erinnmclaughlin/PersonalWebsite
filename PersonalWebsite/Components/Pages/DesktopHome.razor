@@ -2,6 +2,7 @@
 @page "/apps"
 @page "/desktop"
 @using PersonalWebsite.Components.Pages.Apps.Music
+@using PersonalWebsite.Components.Pages.Apps.Messages
 @rendermode InteractiveServer
 
 <div class="desktop">
@@ -80,7 +81,7 @@
             Icon = "💬",
             DefaultWidth = 700,
             DefaultHeight = 550,
-            Content = @<div class="app-placeholder">Messages App</div>
+            Content = @<MessageApp />
         },
         new()
         {
