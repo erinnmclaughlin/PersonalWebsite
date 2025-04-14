@@ -1,8 +1,11 @@
 @using Microsoft.JSInterop
 @implements IAsyncDisposable
 
-<div class="window @(IsActive ? "active" : "") @(IsMaximized ? "maximized" : "")" style="width: @(Width)px; height: @(Height)px; top: @(Y)px; left: @(X)px; z-index: @ZIndex;" @ref="windowElement">
-    <div class="window-header" @onmousedown="StartDrag">
+<div class="window @(IsActive ? "active" : "") @(IsMaximized ? "maximized" : "")" 
+     style="width: @(Width)px; height: @(Height)px; top: @(Y)px; left: @(X)px; z-index: @ZIndex;"
+     data-window-id="@WindowId"
+     @ref="windowElement">
+    <div class="window-header">
         <div class="window-title">@Title</div>
         <div class="window-controls">
             <button class="window-button minimize" @onclick="OnMinimize">_</button>
@@ -13,7 +16,7 @@
     <div class="window-content">
         @ChildContent
     </div>
-    <div class="resize-handle" @onmousedown="StartResize"></div>
+    <div class="resize-handle"></div>
 </div>
 
 @code {
@@ -43,6 +46,9 @@
     
     [Parameter]
     public bool IsMaximized { get; set; } = false;
+    
+    [Parameter]
+    public string WindowId { get; set; } = "";
 
     [Parameter]
     public EventCallback OnMinimize { get; set; }
@@ -55,10 +61,14 @@
 
     [Parameter]
     public EventCallback<WindowPosition> OnPositionChanged { get; set; }
+    
+    [Parameter]
+    public EventCallback<string> OnActivate { get; set; }
 
     private ElementReference windowElement;
     private DotNetObjectReference<ResizableWindow>? objRef;
     private IJSObjectReference? module;
+    private bool suppressStateHasChanged = false;
 
     [Inject]
     public IJSRuntime JSRuntime { get; set; } = default!;
@@ -72,33 +82,36 @@
             await module.InvokeVoidAsync("initializeWindow", windowElement, objRef);
         }
     }
-
-    private async Task StartDrag(MouseEventArgs e)
+    
+    [JSInvokable]
+    public async Task ActivateWindow(string windowId)
     {
-        if (!IsMaximized)
-        {
-            await module!.InvokeVoidAsync("startDrag", e.ClientX, e.ClientY);
-        }
-    }
-
-    private async Task StartResize(MouseEventArgs e)
-    {
-        if (!IsMaximized)
-        {
-            await module!.InvokeVoidAsync("startResize", e.ClientX, e.ClientY);
-        }
+        // Let the parent component know this window should be activated
+        await OnActivate.InvokeAsync(windowId);
     }
 
     [JSInvokable]
     public async Task UpdatePosition(int x, int y, int width, int height)
     {
-        X = x;
-        Y = y;
-        Width = width;
-        Height = height;
+        // Only update if position has changed
+        if (X != x || Y != y || Width != width || Height != height)
+        {
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
 
-        await OnPositionChanged.InvokeAsync(new WindowPosition { X = x, Y = y, Width = width, Height = height });
-        StateHasChanged();
+            // Notify parent component but don't trigger a render here
+            suppressStateHasChanged = true;
+            await OnPositionChanged.InvokeAsync(new WindowPosition { X = x, Y = y, Width = width, Height = height });
+            suppressStateHasChanged = false;
+        }
+    }
+    
+    protected override bool ShouldRender()
+    {
+        // Skip renders during position updates that happen in JS
+        return !suppressStateHasChanged;
     }
 
     public async ValueTask DisposeAsync()

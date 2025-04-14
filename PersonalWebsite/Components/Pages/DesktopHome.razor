@@ -26,10 +26,12 @@
             ZIndex="@window.ZIndex"
             IsActive="@(window.Id == ActiveWindowId)"
             IsMaximized="@window.IsMaximized"
+            WindowId="@window.Id.ToString()"
             OnClose="@(() => CloseWindow(window.Id))"
             OnMaximize="@(() => MaximizeWindow(window.Id))"
             OnMinimize="@(() => MinimizeWindow(window.Id))"
-            OnPositionChanged="@((pos) => UpdateWindowPosition(window.Id, pos))">
+            OnPositionChanged="@((pos) => UpdateWindowPosition(window.Id, pos))"
+            OnActivate="@(id => ActivateWindowFromUI(Guid.Parse(id)))">
 
             <CascadingValue Value="@window.Id" Name="WindowId">
                 @window.Content

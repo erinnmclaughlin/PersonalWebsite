@@ -120,18 +120,39 @@ public sealed partial class DesktopHome
         }
     }
     
+    // Called from ResizableWindow when a window is clicked
+    private void ActivateWindowFromUI(Guid windowId)
+    {
+        // Check if the window exists and is not already active
+        var window = ActiveWindows.FirstOrDefault(w => w.Id == windowId);
+        if (window != null && ActiveWindowId != windowId)
+        {
+            // Make a direct call to activate
+            ActivateWindow(windowId);
+        }
+    }
+    
     private void ActivateWindow(Guid windowId)
     {
-        ActiveWindowId = windowId;
-        
-        var window = ActiveWindows.FirstOrDefault(w => w.Id == windowId);
-        if (window != null)
+        // Only process if this is a different window than the currently active one
+        if (ActiveWindowId != windowId)
         {
-            // Bring to front
-            window.ZIndex = NextZIndex++;
-            window.IsMinimized = false;
+            ActiveWindowId = windowId;
             
-            StateHasChanged();
+            var window = ActiveWindows.FirstOrDefault(w => w.Id == windowId);
+            if (window != null)
+            {
+                // Bring to front by setting z-index higher than any other window
+                var highestZIndex = ActiveWindows.Max(w => w.ZIndex);
+                window.ZIndex = highestZIndex + 1;
+                NextZIndex = window.ZIndex + 1;
+                
+                // Ensure window is not minimized
+                window.IsMinimized = false;
+                
+                // Always trigger a UI update
+                StateHasChanged();
+            }
         }
     }
     
@@ -140,10 +161,17 @@ public sealed partial class DesktopHome
         var window = ActiveWindows.FirstOrDefault(w => w.Id == windowId);
         if (window != null && !window.IsMaximized)
         {
-            window.X = position.X;
-            window.Y = position.Y;
-            window.Width = position.Width;
-            window.Height = position.Height;
+            // Only update if position has actually changed
+            if (window.X != position.X || window.Y != position.Y || 
+                window.Width != position.Width || window.Height != position.Height)
+            {
+                window.X = position.X;
+                window.Y = position.Y;
+                window.Width = position.Width;
+                window.Height = position.Height;
+                
+                // No StateHasChanged() call needed here - the UI updates are handled by JavaScript
+            }
         }
     }
     

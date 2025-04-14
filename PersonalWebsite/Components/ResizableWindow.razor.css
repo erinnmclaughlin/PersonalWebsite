@@ -6,9 +6,23 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: box-shadow 0.2s, width 0.2s, height 0.2s, top 0.2s, left 0.2s;
     min-width: 300px;
     min-height: 200px;
+}
+
+/* Special class for when the window is being dragged */
+.window.dragging {
+    opacity: 0.98;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    /* Important: no transitions during drag */
+    transition: none !important;
+}
+
+/* Special class for when the window is being resized */
+.window.resizing {
+    opacity: 0.98;
+    /* Important: no transitions during resize */
+    transition: none !important;
 }
 
 .window.active {
@@ -34,8 +48,12 @@
     align-items: center;
     padding: 0.5rem 1rem;
     background-color: var(--bg-tertiary);
-    cursor: move;
     user-select: none;
+    cursor: grab;
+}
+
+.window-header:active {
+    cursor: grabbing;
 }
 
 .window-title {
@@ -46,6 +64,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    pointer-events: none; /* Prevent text selection during drag */
 }
 
 .window-controls {
