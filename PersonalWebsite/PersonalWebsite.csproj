@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.46.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\window.js" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,78 @@
+@page "/apps/settings"
+@inherits ComponentBase
+@inject IJSRuntime JSRuntime
+
+<div class="settings-app @(IsInWindow ? "in-window" : "")">
+    <div class="settings-sidebar">
+        <div class="settings-category @(ActiveCategory == "appearance" ? "active" : "")" @onclick="@(() => SelectCategory("appearance"))">
+            <span class="category-icon">🎨</span>
+            <span>Appearance</span>
+        </div>
+        <div class="settings-category @(ActiveCategory == "general" ? "active" : "")" @onclick="@(() => SelectCategory("general"))">
+            <span class="category-icon">⚙️</span>
+            <span>General</span>
+        </div>
+        <div class="settings-category @(ActiveCategory == "about" ? "active" : "")" @onclick="@(() => SelectCategory("about"))">
+            <span class="category-icon">ℹ️</span>
+            <span>About</span>
+        </div>
+    </div>
+    
+    <div class="settings-content">
+        @if (ActiveCategory == "appearance")
+        {
+            <div class="settings-section">
+                <h2>Appearance Settings</h2>
+                
+                <div class="settings-section">
+                    <h3>Theme</h3>
+                    <p>Choose how you want the interface to look.</p>
+                    
+                    <div class="theme-options">
+                        <div class="theme-option @(CurrentTheme == "light" ? "active" : "")" @onclick="@(() => SetTheme("light"))">
+                            <div class="theme-preview light-preview">
+                                <span>☀️</span>
+                            </div>
+                            <span>Light</span>
+                        </div>
+                        
+                        <div class="theme-option @(CurrentTheme == "dark" ? "active" : "")" @onclick="@(() => SetTheme("dark"))">
+                            <div class="theme-preview dark-preview">
+                                <span>🌙</span>
+                            </div>
+                            <span>Dark</span>
+                        </div>
+                        
+                        <div class="theme-option @(CurrentTheme == "system" ? "active" : "")" @onclick="@(() => SetTheme("system"))">
+                            <div class="theme-preview">
+                                <span>💻</span>
+                            </div>
+                            <span>System</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (ActiveCategory == "general")
+        {
+            <div class="settings-section">
+                <h2>General Settings</h2>
+                <p class="settings-info">This section will contain general application settings in future updates.</p>
+            </div>
+        }
+        else if (ActiveCategory == "about")
+        {
+            <div class="settings-section">
+                <h2>About This App</h2>
+                <p class="settings-info">
+                    This is a personal portfolio website built with Blazor and .NET.
+                    It showcases various mini-applications and components as examples of web development work.
+                </p>
+                <p class="settings-info">
+                    Version: 1.0.0<br />
+                    Created by: Erin McLaughlin
+                </p>
+            </div>
+        }
+    </div>
+</div> 

@@ -1,5 +1,6 @@
 @using Microsoft.JSInterop
 @implements IAsyncDisposable
+@rendermode InteractiveAuto
 
 <div class="window @(IsActive ? "active" : "") @(IsMaximized ? "maximized" : "")" 
      style="width: @(Width)px; height: @(Height)px; top: @(Y)px; left: @(X)px; z-index: @ZIndex;"

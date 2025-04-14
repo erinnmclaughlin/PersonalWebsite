@@ -3,6 +3,7 @@
 @page "/desktop"
 @using PersonalWebsite.Components.Pages.Apps.Music
 @using PersonalWebsite.Components.Pages.Apps.Messages
+@using PersonalWebsite.Components.Pages.Apps.Settings
 @rendermode InteractiveServer
 
 <div class="desktop">
@@ -94,12 +95,12 @@
         },
         new()
         {
-            Id = "browser",
-            Name = "Browser",
+            Id = "settings",
+            Name = "Settings",
             Icon = "🌐",
             DefaultWidth = 900,
             DefaultHeight = 600,
-            Content = @<div class="app-placeholder">Browser App</div>
+            Content = @<SettingsApp />
         }
     ];
 }

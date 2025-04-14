@@ -7,6 +7,7 @@
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
+    transition: background-image 0.3s ease;
 }
 
 /* Desktop Icons */
@@ -156,35 +157,35 @@
     border-radius: 0 !important;
 } */
 
-@media (prefers-color-scheme: light) {
-    .desktop {
-        background-image: url("desktop_wallpaper_light.png");
-    }
+/* Add theme-specific styles using data-theme attribute */
+[data-theme="light"] .desktop {
+    /* This is now handled by JS directly */
+}
 
-    .icon-label {
-        color: var(--text-primary);
-        text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
-    }
+[data-theme="light"] .icon-label {
+    color: var(--text-primary);
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+}
 
-    .taskbar {
-        background-color: rgba(240, 240, 240, 0.8);
-    }
+[data-theme="light"] .taskbar {
+    background-color: rgba(240, 240, 240, 0.8);
+}
 
-    .taskbar-button, .taskbar-app {
-        color: var(--text-primary);
-    }
+[data-theme="light"] .taskbar-button,
+[data-theme="light"] .taskbar-app {
+    color: var(--text-primary);
+}
 
-    .taskbar-app {
-        background-color: rgba(200, 200, 200, 0.6);
-    }
+[data-theme="light"] .taskbar-app {
+    background-color: rgba(200, 200, 200, 0.6);
+}
 
-    .taskbar-app:hover {
-        background-color: rgba(180, 180, 180, 0.6);
-    }
+[data-theme="light"] .taskbar-app:hover {
+    background-color: rgba(180, 180, 180, 0.6);
+}
 
-    .taskbar-app.active {
-        background-color: rgba(160, 160, 160, 0.6);
-    }
+[data-theme="light"] .taskbar-app.active {
+    background-color: rgba(160, 160, 160, 0.6);
 }
 
 /* Responsive adjustments */
