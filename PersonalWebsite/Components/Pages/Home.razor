@@ -1,27 +1,39 @@
-﻿@page "/"
-@page "/apps"
-@layout Layout.DeviceLayout
+﻿@layout Layout.DeviceLayout
 
 <div class="home-screen">
     <div class="status-bar">
         <DeviceClock />
     </div>
     <div class="app-grid">
-        <a class="app-icon" href="apps/messages">
-            <div class="app-icon-img messages-icon"></div>
-            <span class="app-name">Messages</span>
-        </a>
-        <a class="app-icon" href="apps/photos">
-            <div class="app-icon-img photos-icon"></div>
-            <span class="app-name">Photos</span>
-        </a>
-        <div class="app-icon">
-            <div class="app-icon-img safari-icon"></div>
-            <span class="app-name">Safari</span>
+        <div>
+            <a class="app-icon" href="apps/messages">
+                <div class="app-icon-img messages-icon"></div>
+                <span class="app-name">Messages</span>
+            </a>
         </div>
-        <div class="app-icon">
-            <div class="app-icon-img music-icon"></div>
-            <span class="app-name">Music</span>
+        <div>
+            <a class="app-icon" href="apps/photos">
+                <div class="app-icon-img photos-icon"></div>
+                <span class="app-name">Photos</span>
+            </a>
+        </div>
+        <div>
+            <div class="app-icon">
+                <div class="app-icon-img safari-icon"></div>
+                <span class="app-name">Safari</span>
+            </div>
+        </div>
+        <div>
+            <a class="app-icon" href="apps/music">
+                <div class="app-icon-img music-icon"></div>
+                <span class="app-name">Music</span>
+            </a>
+        </div>
+        <div>
+            <a class="app-icon" href="desktop">
+                <div class="app-icon-img desktop-icon"></div>
+                <span class="app-name">Desktop</span>
+            </a>
         </div>
     </div>
     <div class="dock">
@@ -34,8 +46,8 @@
         <div class="app-icon">
             <div class="app-icon-img mail-icon"></div>
         </div>
-        <div class="app-icon">
-            <div class="app-icon-img safari-icon"></div>
-        </div>
+        <a class="app-icon" href="desktop">
+            <div class="app-icon-img desktop-icon"></div>
+        </a>
     </div>
 </div>

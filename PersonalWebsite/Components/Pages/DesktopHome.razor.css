@@ -1,0 +1,216 @@
+.desktop {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url("desktop_wallpaper_dark.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Desktop Icons */
+.desktop-icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    grid-auto-rows: 100px;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.desktop-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+    border-radius: var(--radius-sm);
+    padding: 0.5rem;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+
+.desktop-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.desktop-icon:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.icon-image {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.icon-label {
+    color: white;
+    font-size: 0.75rem;
+    text-align: center;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Taskbar */
+.taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: rgba(40, 40, 40, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.taskbar-start {
+    margin-right: 0.5rem;
+}
+
+.taskbar-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 0.25rem 1rem;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.taskbar-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.taskbar-button:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.taskbar-apps {
+    display: flex;
+    flex: 1;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0 0.5rem;
+}
+
+.taskbar-app {
+    background-color: rgba(80, 80, 80, 0.6);
+    color: white;
+    border: none;
+    padding: 0.25rem 1rem;
+    min-width: 120px;
+    max-width: 180px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.taskbar-app:hover {
+    background-color: rgba(100, 100, 100, 0.6);
+}
+
+.taskbar-app.active {
+    background-color: rgba(120, 120, 120, 0.6);
+}
+
+.taskbar-tray {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* No longer needed as it's defined in ResizableWindow.razor.css */
+/* :global(.window.maximized) {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+    border-radius: 0 !important;
+} */
+
+@media (prefers-color-scheme: light) {
+    .desktop {
+        background-image: url("desktop_wallpaper_light.png");
+    }
+
+    .icon-label {
+        color: var(--text-primary);
+        text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+    }
+
+    .taskbar {
+        background-color: rgba(240, 240, 240, 0.8);
+    }
+
+    .taskbar-button, .taskbar-app {
+        color: var(--text-primary);
+    }
+
+    .taskbar-app {
+        background-color: rgba(200, 200, 200, 0.6);
+    }
+
+    .taskbar-app:hover {
+        background-color: rgba(180, 180, 180, 0.6);
+    }
+
+    .taskbar-app.active {
+        background-color: rgba(160, 160, 160, 0.6);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .desktop-icons {
+        grid-template-columns: repeat(auto-fill, 70px);
+        grid-auto-rows: 90px;
+    }
+
+    .icon-image {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .taskbar-app {
+        min-width: 100px;
+    }
+}
+
+.app-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}

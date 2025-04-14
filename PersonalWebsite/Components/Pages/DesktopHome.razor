@@ -1,0 +1,102 @@
+@page "/"
+@page "/apps"
+@page "/desktop"
+@using PersonalWebsite.Components.Pages.Apps.Music
+@rendermode InteractiveServer
+
+<div class="desktop">
+    <div class="desktop-icons">
+        @foreach (var app in Apps)
+        {
+            <button type="button" class="desktop-icon" @onclick="() => LaunchApp(app)">
+                <div class="icon-image">@app.Icon</div>
+                <div class="icon-label">@app.Name</div>
+            </button>
+        }
+    </div>
+
+    @foreach (var window in ActiveWindows)
+    {
+        <ResizableWindow
+            Title="@window.Title"
+            X="@window.X"
+            Y="@window.Y"
+            Width="@window.Width"
+            Height="@window.Height"
+            ZIndex="@window.ZIndex"
+            IsActive="@(window.Id == ActiveWindowId)"
+            IsMaximized="@window.IsMaximized"
+            OnClose="@(() => CloseWindow(window.Id))"
+            OnMaximize="@(() => MaximizeWindow(window.Id))"
+            OnMinimize="@(() => MinimizeWindow(window.Id))"
+            OnPositionChanged="@((pos) => UpdateWindowPosition(window.Id, pos))">
+
+            <CascadingValue Value="@window.Id" Name="WindowId">
+                @window.Content
+            </CascadingValue>
+        </ResizableWindow>
+    }
+
+    <div class="taskbar">
+        <div class="taskbar-start">
+            <button class="taskbar-button start">
+                <span>Start</span>
+            </button>
+        </div>
+
+        <div class="taskbar-apps">
+            @foreach (var window in ActiveWindows.Where(w => !w.IsMinimized))
+            {
+                <button class="taskbar-app @(window.Id == ActiveWindowId ? "active" : "")"
+                        @onclick="() => ActivateWindow(window.Id)">
+                    <span>@window.Title</span>
+                </button>
+            }
+        </div>
+
+        <div class="taskbar-tray">
+            <DeviceClock />
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<AppInfo> Apps { get; } = [
+        new()
+        {
+            Id = "music",
+            Name = "Music",
+            Icon = "🎵",
+            DefaultWidth = 800,
+            DefaultHeight = 600,
+            Content = @<MusicApp />
+        },
+        new()
+        {
+            Id = "messages",
+            Name = "Messages",
+            Icon = "💬",
+            DefaultWidth = 700,
+            DefaultHeight = 550,
+            Content = @<div class="app-placeholder">Messages App</div>
+        },
+        new()
+        {
+            Id = "photos",
+            Name = "Photos",
+            Icon = "🖼️",
+            DefaultWidth = 850,
+            DefaultHeight = 650,
+            Content = @<div class="app-placeholder">Photos App</div>
+        },
+        new()
+        {
+            Id = "browser",
+            Name = "Browser",
+            Icon = "🌐",
+            DefaultWidth = 900,
+            DefaultHeight = 600,
+            Content = @<div class="app-placeholder">Browser App</div>
+        }
+    ];
+}

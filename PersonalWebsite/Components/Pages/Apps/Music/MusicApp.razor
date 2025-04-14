@@ -1,0 +1,298 @@
+@page "/apps/music"
+
+<CascadingValue Value="IsInWindow" Name="IsInWindow">
+    @if (IsInWindow)
+    {
+        <div class="music-app">
+            <div class="sidebar">
+                <div class="menu-section">
+                    <h3>Library</h3>
+                    <ul class="menu-list">
+                        <li class="active">
+                            <span class="icon">♫</span> Playlists
+                        </li>
+                        <li>
+                            <span class="icon">♪</span> Artists
+                        </li>
+                        <li>
+                            <span class="icon">♬</span> Albums
+                        </li>
+                        <li>
+                            <span class="icon">↻</span> Recently Played
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="menu-section">
+                    <h3>Playlists</h3>
+                    <ul class="playlist-list">
+                        <li>
+                            <div class="playlist-item">
+                                <div class="playlist-cover">
+                                    <span class="cover-placeholder">🎵</span>
+                                </div>
+                                <span class="playlist-name">Coding Jams</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="playlist-item">
+                                <div class="playlist-cover">
+                                    <span class="cover-placeholder">🔥</span>
+                                </div>
+                                <span class="playlist-name">Workout Mix</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="playlist-item">
+                                <div class="playlist-cover">
+                                    <span class="cover-placeholder">🌙</span>
+                                </div>
+                                <span class="playlist-name">Chill Evening</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="playlist-item">
+                                <div class="playlist-cover">
+                                    <span class="cover-placeholder">🎉</span>
+                                </div>
+                                <span class="playlist-name">Party Anthems</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="featured-section">
+                    <div class="featured-header">
+                        <h2>Featured Playlist</h2>
+                    </div>
+                    <div class="featured-playlist">
+                        <div class="featured-cover">
+                            <span class="featured-cover-placeholder">🎵</span>
+                        </div>
+                        <div class="featured-details">
+                            <h1>Coding Jams</h1>
+                            <p>Perfect tunes to help you focus while coding</p>
+                            <div class="featured-controls">
+                                <button class="play-button">Play</button>
+                                <button class="shuffle-button">Shuffle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tracks-section">
+                    <h3>Tracks</h3>
+                    <table class="tracks-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Artist</th>
+                                <th>Album</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                <tr class="@(i == 1 ? "active" : "")">
+                                    <td>@i</td>
+                                    <td>Track @i</td>
+                                    <td>Artist @(i % 3 + 1)</td>
+                                    <td>Album @(i % 4 + 1)</td>
+                                    <td>@(3 + i % 3):@(i % 6 * 10 + 10)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="now-playing-bar">
+            <div class="now-playing-info">
+                <div class="now-playing-cover">
+                    <span class="cover-placeholder">🎵</span>
+                </div>
+                <div class="now-playing-details">
+                    <div class="now-playing-title">Track 1</div>
+                    <div class="now-playing-artist">Artist 1</div>
+                </div>
+            </div>
+            
+            <div class="playback-controls">
+                <button class="control-button shuffle">🔀</button>
+                <button class="control-button prev">⏮</button>
+                <button class="control-button play">▶</button>
+                <button class="control-button next">⏭</button>
+                <button class="control-button repeat">🔁</button>
+            </div>
+            
+            <div class="playback-bar">
+                <span class="current-time">1:23</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width:30%"></div>
+                </div>
+                <span class="total-time">4:56</span>
+            </div>
+            
+            <div class="additional-controls">
+                <button class="control-button volume">🔊</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <AppContainer AppName="Music">
+            <div class="music-app">
+                <div class="sidebar">
+                    <div class="menu-section">
+                        <h3>Library</h3>
+                        <ul class="menu-list">
+                            <li class="active">
+                                <span class="icon">♫</span> Playlists
+                            </li>
+                            <li>
+                                <span class="icon">♪</span> Artists
+                            </li>
+                            <li>
+                                <span class="icon">♬</span> Albums
+                            </li>
+                            <li>
+                                <span class="icon">↻</span> Recently Played
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="menu-section">
+                        <h3>Playlists</h3>
+                        <ul class="playlist-list">
+                            <li>
+                                <div class="playlist-item">
+                                    <div class="playlist-cover">
+                                        <span class="cover-placeholder">🎵</span>
+                                    </div>
+                                    <span class="playlist-name">Coding Jams</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="playlist-item">
+                                    <div class="playlist-cover">
+                                        <span class="cover-placeholder">🔥</span>
+                                    </div>
+                                    <span class="playlist-name">Workout Mix</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="playlist-item">
+                                    <div class="playlist-cover">
+                                        <span class="cover-placeholder">🌙</span>
+                                    </div>
+                                    <span class="playlist-name">Chill Evening</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="playlist-item">
+                                    <div class="playlist-cover">
+                                        <span class="cover-placeholder">🎉</span>
+                                    </div>
+                                    <span class="playlist-name">Party Anthems</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="main-content">
+                    <div class="featured-section">
+                        <div class="featured-header">
+                            <h2>Featured Playlist</h2>
+                        </div>
+                        <div class="featured-playlist">
+                            <div class="featured-cover">
+                                <span class="featured-cover-placeholder">🎵</span>
+                            </div>
+                            <div class="featured-details">
+                                <h1>Coding Jams</h1>
+                                <p>Perfect tunes to help you focus while coding</p>
+                                <div class="featured-controls">
+                                    <button class="play-button">Play</button>
+                                    <button class="shuffle-button">Shuffle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tracks-section">
+                        <h3>Tracks</h3>
+                        <table class="tracks-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Artist</th>
+                                    <th>Album</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    <tr class="@(i == 1 ? "active" : "")">
+                                        <td>@i</td>
+                                        <td>Track @i</td>
+                                        <td>Artist @(i % 3 + 1)</td>
+                                        <td>Album @(i % 4 + 1)</td>
+                                        <td>@(3 + i % 3):@(i % 6 * 10 + 10)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="now-playing-bar">
+                <div class="now-playing-info">
+                    <div class="now-playing-cover">
+                        <span class="cover-placeholder">🎵</span>
+                    </div>
+                    <div class="now-playing-details">
+                        <div class="now-playing-title">Track 1</div>
+                        <div class="now-playing-artist">Artist 1</div>
+                    </div>
+                </div>
+                
+                <div class="playback-controls">
+                    <button class="control-button shuffle">🔀</button>
+                    <button class="control-button prev">⏮</button>
+                    <button class="control-button play">▶</button>
+                    <button class="control-button next">⏭</button>
+                    <button class="control-button repeat">🔁</button>
+                </div>
+                
+                <div class="playback-bar">
+                    <span class="current-time">1:23</span>
+                    <div class="progress-bar">
+                        <div class="progress" style="width:30%"></div>
+                    </div>
+                    <span class="total-time">4:56</span>
+                </div>
+                
+                <div class="additional-controls">
+                    <button class="control-button volume">🔊</button>
+                </div>
+            </div>
+        </AppContainer>
+    }
+</CascadingValue>
+
+@code {
+    [CascadingParameter(Name = "WindowId")]
+    public Guid? WindowId { get; set; }
+    
+    private bool IsInWindow => WindowId.HasValue;
+}
+
