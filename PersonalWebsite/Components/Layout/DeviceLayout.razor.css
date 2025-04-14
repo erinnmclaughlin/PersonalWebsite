@@ -3,13 +3,13 @@
 }
 
 .container {
-    max-width: 800px;
+    max-width: clamp(300px, 100vw, 1200px);
     margin: 0 auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
-    padding: calc((var(--lottie-height) * 5 / 8) + 1rem) 1.5rem 1.5rem;
+    padding: calc((var(--lottie-height) * 5 / 8) + 1rem) 0.5rem;
 }
 
 .lottie {
@@ -27,6 +27,7 @@
     background: var(--bg-tertiary);
     border-radius: var(--radius-lg);
     padding: 1rem;
+    position: relative;
 }
 
 .device-screen {
@@ -40,4 +41,55 @@
     padding: 0;
     gap: 0;
     position: relative;
+}
+
+/* Desktop-styled device for screens wider than 1200px */
+@media (min-width: 1200px) {
+    .container {
+        padding-bottom: 4rem;
+    }
+    
+    .device {
+        height: calc(100% - 40px);
+        margin-bottom: 40px;
+        border-radius: var(--radius-xl);
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        overflow: visible;
+    }
+    
+    /* Desktop monitor stand */
+    .device::after {
+        content: '';
+        position: absolute;
+        bottom: -35px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30%;
+        height: 35px;
+        background: var(--bg-tertiary);
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+    
+    /* Desktop monitor base */
+    .device::before {
+        content: '';
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 45%;
+        height: 5px;
+        background: var(--bg-tertiary);
+        border-radius: 5px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        z-index: 0;
+    }
+    
+    .device-screen {
+        border-radius: var(--radius-lg);
+        border-width: 2px;
+    }
 }
