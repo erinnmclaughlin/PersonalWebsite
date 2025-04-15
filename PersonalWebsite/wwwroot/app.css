@@ -37,6 +37,7 @@ body {
     color: var(--text-primary);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     margin: 0;
+    overflow: hidden;
 }
 
 /* Use theme background for body based on data-theme attribute */
