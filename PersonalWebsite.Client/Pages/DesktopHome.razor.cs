@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Components;
 
-namespace PersonalWebsite.Components.Pages;
+namespace PersonalWebsite.Client.Pages;
 
 public sealed partial class DesktopHome
 {
     private Guid ActiveWindowId { get; set; }
-    private List<WindowInfo> ActiveWindows { get; set; } = new();
+    private List<WindowInfo> ActiveWindows { get; } = [];
     private int NextZIndex { get; set; } = 1;
     
     private void LaunchApp(AppInfo app)
@@ -62,76 +62,6 @@ public sealed partial class DesktopHome
         }
     }
     
-    private void MinimizeWindow(Guid windowId)
-    {
-        var window = ActiveWindows.FirstOrDefault(w => w.Id == windowId);
-        if (window != null)
-        {
-            window.IsMinimized = true;
-            
-            // Set the next active window
-            if (ActiveWindows.Count > 0)
-            {
-                var nextActive = ActiveWindows.Where(w => !w.IsMinimized)
-                    .OrderByDescending(w => w.ZIndex)
-                    .FirstOrDefault();
-                    
-                if (nextActive != null)
-                {
-                    ActivateWindow(nextActive.Id);
-                }
-            }
-            
-            StateHasChanged();
-        }
-    }
-    
-    private void MaximizeWindow(Guid windowId)
-    {
-        var window = ActiveWindows.FirstOrDefault(w => w.Id == windowId);
-        if (window != null)
-        {
-            if (window.IsMaximized)
-            {
-                // Restore to previous size
-                window.X = window.PrevX;
-                window.Y = window.PrevY;
-                window.Width = window.PrevWidth;
-                window.Height = window.PrevHeight;
-                window.IsMaximized = false;
-            }
-            else
-            {
-                // Store current size
-                window.PrevX = window.X;
-                window.PrevY = window.Y;
-                window.PrevWidth = window.Width;
-                window.PrevHeight = window.Height;
-                
-                // Maximize - these values will be overridden by CSS when maximized class is applied
-                window.X = 0;
-                window.Y = 0;
-                window.Width = window.PrevWidth; // Keep width value for restoring
-                window.Height = window.PrevHeight; // Keep height value for restoring
-                window.IsMaximized = true;
-            }
-            
-            StateHasChanged();
-        }
-    }
-    
-    // Called from ResizableWindow when a window is clicked
-    private void ActivateWindowFromUI(Guid windowId)
-    {
-        // Check if the window exists and is not already active
-        var window = ActiveWindows.FirstOrDefault(w => w.Id == windowId);
-        if (window != null && ActiveWindowId != windowId)
-        {
-            // Make a direct call to activate
-            ActivateWindow(windowId);
-        }
-    }
-    
     private void ActivateWindow(Guid windowId)
     {
         // Only process if this is a different window than the currently active one
@@ -152,25 +82,6 @@ public sealed partial class DesktopHome
                 
                 // Always trigger a UI update
                 StateHasChanged();
-            }
-        }
-    }
-    
-    private void UpdateWindowPosition(Guid windowId, ResizableWindow.WindowPosition position)
-    {
-        var window = ActiveWindows.FirstOrDefault(w => w.Id == windowId);
-        if (window != null && !window.IsMaximized)
-        {
-            // Only update if position has actually changed
-            if (window.X != position.X || window.Y != position.Y || 
-                window.Width != position.Width || window.Height != position.Height)
-            {
-                window.X = position.X;
-                window.Y = position.Y;
-                window.Width = position.Width;
-                window.Height = position.Height;
-                
-                // No StateHasChanged() call needed here - the UI updates are handled by JavaScript
             }
         }
     }
@@ -197,10 +108,6 @@ public sealed partial class DesktopHome
         public int ZIndex { get; set; }
         public bool IsMinimized { get; set; }
         public bool IsMaximized { get; set; }
-        public int PrevX { get; set; }
-        public int PrevY { get; set; }
-        public int PrevWidth { get; set; }
-        public int PrevHeight { get; set; }
         public RenderFragment? Content { get; set; }
     }
 }

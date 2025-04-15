@@ -1,0 +1,16 @@
+<div @ref="_element" 
+     class="window" 
+     style="left: @(DefaultX)px; top:  @(DefaultY)px; width: @DefaultWidth; height: @DefaultHeight; z-index: @ZIndex;">
+    <div class="window-header">
+        <div class="window-title">@Title</div>
+        <div class="window-controls">
+            <button class="window-button minimize" @onclick="OnMinimize">_</button>
+            <button class="window-button maximize" @onclick="OnMaximize">□</button>
+            <button class="window-button close" @onclick="OnClose">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        @ChildContent
+    </div>
+    <div class="resize-handle"></div>
+</div>

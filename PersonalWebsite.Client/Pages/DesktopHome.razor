@@ -1,0 +1,67 @@
+@page "/"
+@page "/apps"
+@page "/desktop"
+@using PersonalWebsite.Client.Pages.Apps.Music
+@rendermode InteractiveAuto
+
+<div class="desktop">
+    <div class="desktop-icons">
+        @foreach (var app in Apps)
+        {
+            <button type="button" class="desktop-icon" @onclick="() => LaunchApp(app)">
+                <div class="icon-image">@app.Icon</div>
+                <div class="icon-label">@app.Name</div>
+            </button>
+        }
+    </div>
+
+    @foreach (var window in ActiveWindows)
+    {
+        <ResizableWindow
+            Title="@window.Title"
+            DefaultX="@window.X"
+            DefaultY="@window.Y"
+            DefaultWidth="@window.Width"
+            DefaultHeight="@window.Height"
+            ZIndex="@window.ZIndex"
+            OnClose="@(() => CloseWindow(window.Id))">
+            @window.Content
+        </ResizableWindow>
+    }
+
+    <div class="taskbar">
+        <div class="taskbar-start">
+            <button class="taskbar-button start">
+                <span>Start</span>
+            </button>
+        </div>
+
+        <div class="taskbar-apps">
+            @foreach (var window in ActiveWindows.Where(w => !w.IsMinimized))
+            {
+                <button class="taskbar-app @(window.Id == ActiveWindowId ? "active" : "")"
+                        @onclick="() => ActivateWindow(window.Id)">
+                    <span>@window.Title</span>
+                </button>
+            }
+        </div>
+
+        <div class="taskbar-tray">
+            <DeviceClock />
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<AppInfo> Apps { get; } = [
+        new()
+        {
+            Id = "music",
+            Name = "Music",
+            Icon = "🎵",
+            DefaultWidth = 800,
+            DefaultHeight = 600,
+            Content = @<MusicApp />
+        }
+    ];
+}

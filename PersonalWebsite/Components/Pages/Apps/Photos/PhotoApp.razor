@@ -1,7 +1,6 @@
 ﻿@page "/apps/photos"
-@layout Layout.DeviceLayout
 
-<AppContainer AppName="Photos">
+<AppWindow AppName="Photos">
    <div class="photos">
       @foreach (var photo in _photos)
       {
@@ -10,4 +9,4 @@
          </div>
       }
    </div>
-</AppContainer>
+</AppWindow>

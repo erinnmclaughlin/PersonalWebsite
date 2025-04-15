@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\js\window.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PersonalWebsite.Client\PersonalWebsite.Client.csproj" />
   </ItemGroup>
 

@@ -3,7 +3,10 @@ using PersonalWebsite.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddBlazorComponents();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddInteractiveWebAssemblyComponents();
+
 builder.AddChatClient();
 
 var app = builder.Build();
