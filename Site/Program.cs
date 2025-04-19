@@ -5,7 +5,7 @@ using Site.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var chatClient = new OpenAIClient(builder.Configuration["OpenAI:Key"]).GetChatClient("gpt-4o-mini");
+var chatClient = new OpenAIClient(builder.Configuration["AI:ApiKey"]).GetChatClient("gpt-4o-mini");
 builder.Services.AddChatClient(chatClient.AsIChatClient()).UseFunctionInvocation().UseLogging();
 
 builder.Services
@@ -31,6 +31,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<Site.Components.App>().AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 await app.RunAsync();
