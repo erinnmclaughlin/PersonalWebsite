@@ -1,17 +1,47 @@
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@100..900";
+
+:root {
+    --bg-primary: #000000;
+    --bg-secondary: #111111;
+    --bg-tertiary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --accent-primary: #3b82f6;
+    --accent-secondary: #f6af3b;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+}
+
 * {
-    margin: 0;
     box-sizing: border-box;
 }
 
-html {
-    color-scheme: dark;
-    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+html, body {
+    height: 100%;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    margin: 0;
     overflow: hidden;
 }
 
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    height: 100%;
+lottie-player {
+    height: inherit;
+    width: fit-content;
+}
+
+p {
+    line-height: 1.45;
 }
 
 a {

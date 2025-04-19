@@ -1,4 +1,13 @@
-﻿[*.cs]
+﻿root = true
+
+[*]
+indent_size = 4
+indent_style = space
+
+[*.csproj]
+indent_size = 2
+
+[*.cs]
 
 # SKEXP0001: Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 dotnet_diagnostic.SKEXP0001.severity = none
@@ -8,3 +17,6 @@ dotnet_diagnostic.SKEXP0010.severity = none
 
 # SKEXP0050: Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 dotnet_diagnostic.SKEXP0050.severity = none
+
+# IDE0290: Use primary constructor
+csharp_style_prefer_primary_constructors = false

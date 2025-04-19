@@ -3,23 +3,20 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <title>erinnmclaughlin</title>
-    <link rel="stylesheet" href="app.css?v=@cacheBust" />
-    <link rel="stylesheet" href="Site.styles.css?v=@cacheBust" />
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <HeadOutlet />
+
+    <link rel="stylesheet" href="@Assets["app.css"]" />
+    <link rel="stylesheet" href="@Assets["Site.styles.css"]" />
+    <ImportMap />
+    <HeadOutlet @rendermode="InteractiveServer" />
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="InteractiveServer" />
     <script src="_framework/blazor.web.js"></script>
-    <script src="https://unpkg.com/@('@')lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
+    <script src="app.js"></script>
+    <script src="@("https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js")" defer></script>
 </body>
 
 </html>
-
-@code{
-    private readonly Guid cacheBust = Guid.NewGuid();
-}

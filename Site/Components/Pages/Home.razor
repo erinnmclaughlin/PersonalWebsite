@@ -1,0 +1,53 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>erin mclaughlin &middot; software developer</PageTitle>
+
+<div class="container">
+    <header>
+        <div class="header-content">
+            <h1 class="title">erin mclaughlin</h1>
+            <nav>
+                @foreach (var (name, url) in NavLinks)
+                {
+                    <span class="link">
+                        <a href="@url" target="_blank">@name</a>
+                    </span>
+                }
+            </nav>
+        </div>
+        <div class="lottie">
+            <LottiePlayer Source="woman_working.json" />
+        </div>
+    </header>
+
+    <div class="chat-container">
+
+        <div id="messagesContainer" class="messages-container">
+            @foreach (var message in _chatMessages)
+            {
+                <div class="message @message.Role">
+                    <label>@message.Role</label>
+                    <p>@((MarkupString)Markdig.Markdown.ToHtml(message.Text))</p>
+                </div>
+            }
+
+            @if (StreamingMessage.Length > 0)
+            {
+                <div class="message assistant">
+                    <label>Assistant</label>
+                    <p>@((MarkupString)Markdig.Markdown.ToHtml(StreamingMessage))</p>
+                </div>
+            }
+        </div>
+
+        <div class="input-container">
+            <EditForm Model="this" OnSubmit="Submit">
+                <div class="input-group">
+                    <InputText @bind-Value="@InputField" placeholder="Type your message here..." autocomplete="off" />
+                    <button type="submit" class="submit-button">Send</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>

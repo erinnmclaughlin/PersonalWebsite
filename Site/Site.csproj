@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>a6484596-76d4-4d4c-bb0c-b258ade580fe</UserSecretsId>
+    <UserSecretsId>db3b4888-9d3f-4409-9444-eb47633f24d7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Site.Client\Site.Client.csproj" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.4" />
-    <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.40.240501.1" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.10.0" />
-    <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.10.0-alpha" />
+    <PackageReference Include="Markdig" Version="0.40.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.3" />
+    <PackageReference Include="Microsoft.Extensions.AI" Version="9.4.0-preview.1.25207.5" />
+    <PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="9.4.0-preview.1.25207.5" />
+    <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.46.0" />
   </ItemGroup>
 
 </Project>

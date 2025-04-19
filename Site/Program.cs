@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.ResponseCompression;
-using Site;
+using Microsoft.Extensions.AI;
+using OpenAI;
 using Site.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<AppSettings>(builder.Configuration);
-builder.AddAibbaDefaults();
+var chatClient = new OpenAIClient(builder.Configuration["OpenAI:Key"]).GetChatClient("gpt-4o-mini");
+builder.Services.AddChatClient(chatClient.AsIChatClient()).UseFunctionInvocation().UseLogging();
 
 builder.Services
     .AddRazorComponents()
-    .AddInteractiveServerComponents()
-    .AddInteractiveWebAssemblyComponents();
+    .AddInteractiveServerComponents();
 
 builder.Services.AddResponseCompression(o =>
 {
@@ -19,11 +19,7 @@ builder.Services.AddResponseCompression(o =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseWebAssemblyDebugging();
-}
-else
+if (!app.Environment.IsDevelopment())
 {
     app.UseResponseCompression();
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -35,11 +31,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Site.Client._Imports).Assembly);
+app.MapRazorComponents<Site.Components.App>().AddInteractiveServerRenderMode();
 
-await app.UseAibba();
-
-app.Run();
+await app.RunAsync();
